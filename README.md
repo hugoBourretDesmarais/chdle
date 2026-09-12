@@ -64,7 +64,7 @@ player. Over the wire the scope travels under the original `arcLimit`/`arc_limit
 ## Data
 
 The Canadiens' 2026-27 roster as the NHL API lists it at training camp, minus camp invitees without a
-sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (29 players at the time of
+sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (28 players at the time of
 writing). Roster moves are picked up by rerunning the fetch:
 
 ```bash

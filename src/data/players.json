@@ -981,42 +981,6 @@
   "portrait": "samuel-montembeault.png"
  },
  {
-  "id": 8484533,
-  "name": "Tyler Thorpe",
-  "aliases": [],
-  "number": 24,
-  "position": "RW",
-  "positionName": "Right wing",
-  "shoots": "R",
-  "country": "Canada",
-  "birthplace": "Richmond, BC, Canada",
-  "birthDate": "2005-08-11",
-  "heightIn": 77,
-  "weightLb": 210,
-  "draft": {
-   "year": 2024,
-   "round": 5,
-   "overall": 130,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "capHit": 968333,
-  "contractEnd": 2027,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Laval Rocket",
-   "gp": 68,
-   "goals": 4,
-   "assists": 12,
-   "points": 16
-  },
-  "portrait": "tyler-thorpe.png"
- },
- {
   "id": 8482737,
   "name": "Zachary Bolduc",
   "aliases": [],
