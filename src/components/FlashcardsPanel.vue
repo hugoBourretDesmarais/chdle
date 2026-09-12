@@ -9,6 +9,7 @@ import {
 const props = defineProps({
   players: { type: Array, required: true },
 })
+const emit = defineEmits(['open'])
 
 const base = import.meta.env.BASE_URL
 const deck = ref(loadDeck())
@@ -118,7 +119,12 @@ watch(() => props.players, start)
           <span v-else class="tag">review · every {{ fmtWait(card.interval) }}</span>
         </p>
         <div class="card" :class="{ revealed, correct, wrong: revealed && !correct }">
-          <img class="face" :src="base + 'portraits/' + current.portrait" :alt="current.name" />
+          <button
+            class="face-btn" type="button" :title="`Open ${current.name}'s card`"
+            @click="emit('open', { player: current, hideNumber: !revealed })">
+            <img class="face" :src="base + 'portraits/' + current.portrait" :alt="current.name" />
+            <span class="face-hint">Player card</span>
+          </button>
           <div class="side">
             <span class="who">{{ current.positionName }} · {{ current.country }}</span>
             <form v-if="!revealed" class="answer" @submit.prevent="check">
@@ -218,10 +224,36 @@ watch(() => props.players, start)
 }
 .card.correct { border-color: var(--green); box-shadow: 0 0 0 3px rgba(71, 159, 75, .25); }
 .card.wrong { border-color: var(--red); box-shadow: 0 0 0 3px rgba(178, 60, 57, .25); }
+.face-btn {
+  position: relative;
+  flex: none;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 10px;
+  overflow: hidden;
+  line-height: 0;
+}
+.face-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 0, 0, .25); }
+.face-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .7));
+}
 .face {
+  display: block;
   width: 120px;
   height: 120px;
-  flex: none;
   border-radius: 10px;
   object-fit: cover;
   object-position: top;

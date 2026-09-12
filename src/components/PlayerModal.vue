@@ -6,6 +6,8 @@ import {
 
 const props = defineProps({
   player: { type: Object, required: true },
+  // A flashcard that hasn't been answered yet must not give the number away.
+  hideNumber: { type: Boolean, default: false },
 })
 const emit = defineEmits(['close'])
 
@@ -49,7 +51,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
         <img class="char-portrait" :src="base + 'portraits/' + p.portrait" :alt="p.name" />
         <div class="char-id">
           <h2>{{ p.name }}</h2>
-          <p class="aliases">{{ p.number != null ? `#${p.number} · ` : '' }}{{ p.positionName }}</p>
+          <p class="aliases">{{ !hideNumber && p.number != null ? `#${p.number} · ` : '' }}{{ p.positionName }}</p>
         </div>
       </div>
 
@@ -59,7 +61,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
         <tbody>
           <tr><td>Position</td><td>{{ p.positionName }} ({{ p.position }})</td></tr>
           <tr><td>{{ p.position === 'G' ? 'Catches' : 'Shoots' }}</td><td>{{ p.shoots === 'L' ? 'Left' : 'Right' }}</td></tr>
-          <tr><td>Number</td><td>{{ p.number != null ? `#${p.number}` : 'Not assigned' }}</td></tr>
+          <tr><td>Number</td><td>{{ hideNumber ? '🙈 hidden until you answer' : p.number != null ? `#${p.number}` : 'Not assigned' }}</td></tr>
           <tr><td>Born</td><td>{{ p.birthDate }} ({{ p.age }}) · {{ p.birthplace }}</td></tr>
           <tr><td>Height</td><td>{{ formatHeight(p.heightIn) }} · {{ formatHeightMetric(p.heightIn) }}</td></tr>
           <tr><td>Weight</td><td>{{ formatWeight(p.weightLb) }}</td></tr>

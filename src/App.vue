@@ -34,6 +34,7 @@ const showHelp = ref(false)
 const showStats = ref(false)
 const showSettings = ref(false)
 const galleryPick = ref(null)
+const cardPick = ref(null) // { player, hideNumber } from a flashcard
 const showBoard = ref(false)
 const showWinPrompt = ref(false)
 const account = ref(loadAccount())
@@ -351,7 +352,7 @@ const base = import.meta.env.BASE_URL
             one you miss comes back today. {{ pool.length }} players in the deck.
           </p>
         </section>
-        <FlashcardsPanel :players="pool" />
+        <FlashcardsPanel :players="pool" @open="cardPick = $event" />
       </template>
 
       <template v-else>
@@ -420,6 +421,9 @@ const base = import.meta.env.BASE_URL
     <HelpModal v-if="showHelp" @close="showHelp = false" />
     <StatsModal v-if="showStats" :characters="players" @close="showStats = false" />
     <PlayerModal v-if="galleryPick" :player="galleryPick" @close="galleryPick = null" />
+    <PlayerModal
+      v-if="cardPick" :player="cardPick.player" :hide-number="cardPick.hideNumber"
+      @close="cardPick = null" />
     <WinPrompt
       v-if="showWinPrompt && daily.answer" :answer="daily.answer.name"
       :tries="daily.triesAtWin || daily.guesses.length" :pending-win="pendingWin"
