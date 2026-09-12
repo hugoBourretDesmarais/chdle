@@ -51,7 +51,7 @@ Spaced repetition for the sweater numbers, scheduled like Anki's SM-2 (`src/game
 card keeps an ease factor and an interval; **Again** resets it to today and re-queues it in the
 session, **Hard** stretches the interval ×1.2 and lowers the ease, **Good** multiplies by the ease,
 **Easy** by the ease ×1.3 and raises it. New cards start at 1 day (Good) or 4 days (Easy), and eight
-new players enter the deck per day. The deck, the daily log and the recall rate live in
+new players enter the deck per day, most NHL games played first, so the regulars come before the call-ups. The deck, the daily log and the recall rate live in
 `localStorage` under `chdle:anki`; the roster scope also narrows the deck.
 
 ### Roster scope

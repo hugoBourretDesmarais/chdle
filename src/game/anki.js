@@ -88,15 +88,22 @@ export function introducedToday(deck, today = localDateString()) {
   return deck.log[today]?.introduced ?? 0
 }
 
+// New cards arrive most-experienced first: the regulars you see every game are
+// the numbers worth knowing before the call-ups.
+export function unseenPlayers(deck, players) {
+  return players
+    .filter(p => !deck.cards[p.name])
+    .sort((a, b) => b.nhlGames - a.nhlGames || a.name.localeCompare(b.name))
+}
+
 // Due cards first, oldest due at the front; then new cards up to the daily cap.
 export function buildQueue(deck, players, today = localDateString()) {
   const due = []
-  const fresh = []
   for (const p of players) {
     const c = deck.cards[p.name]
-    if (!c) fresh.push(p)
-    else if (c.due <= today) due.push([c.due, p])
+    if (c && c.due <= today) due.push([c.due, p])
   }
+  const fresh = unseenPlayers(deck, players)
   due.sort((a, b) => a[0].localeCompare(b[0]))
   const room = Math.max(0, NEW_PER_DAY - introducedToday(deck, today))
   return { due: due.map(x => x[1]), fresh: fresh.slice(0, room), unseen: fresh.length }

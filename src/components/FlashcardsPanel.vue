@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import Icon from './Icon.vue'
 import {
   NEW_PER_DAY, RATINGS, buildQueue, deckStats, loadDeck, markIntroduced, preview, rate, resetDeck,
-  saveDeck,
+  saveDeck, unseenPlayers,
 } from '../game/anki.js'
 
 const props = defineProps({
@@ -114,7 +114,7 @@ watch(() => props.players, start)
       <template v-if="current">
         <p class="prompt">
           What number does <b>{{ current.name }}</b> wear?
-          <span v-if="isNew" class="tag new">new</span>
+          <span v-if="isNew" class="tag new">new · {{ current.nhlGames }} NHL GP</span>
           <span v-else class="tag">review · every {{ fmtWait(card.interval) }}</span>
         </p>
         <div class="card" :class="{ revealed, correct, wrong: revealed && !correct }">
@@ -160,7 +160,7 @@ watch(() => props.players, start)
         </p>
         <p v-else>Every number is scheduled. Check back when cards fall due.</p>
         <div class="finish-actions">
-          <button v-if="stats.unseen" class="more" @click="() => { queue = players.filter(p => !deck.cards[p.name]).slice(0, NEW_PER_DAY); finished = false; next() }">
+          <button v-if="stats.unseen" class="more" @click="() => { queue = unseenPlayers(deck, players).slice(0, NEW_PER_DAY); finished = false; next() }">
             <Icon name="dice" :size="16" /> {{ NEW_PER_DAY }} more new cards
           </button>
           <button class="more" @click="start"><Icon name="stats" :size="16" /> Refresh queue</button>
