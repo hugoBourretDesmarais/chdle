@@ -53,7 +53,8 @@ player. Over the wire the scope travels under the original `arcLimit`/`arc_limit
 
 ## Data
 
-The Canadiens' 2026-27 roster as the NHL API lists it at training camp (41 players at the time of
+The Canadiens' 2026-27 roster as the NHL API lists it at training camp, minus camp invitees without a
+sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (31 players at the time of
 writing). Roster moves are picked up by rerunning the fetch:
 
 ```bash
@@ -67,8 +68,7 @@ node api/tools/gen_data.mjs          # regenerate the worker's copy of the roste
 `fetch_nhl.py` reads `/v1/roster/MTL/20262027` and each player's `/v1/player/{id}/landing` for the
 draft record, birthplace, NHL games played, the first regular season with the club and the last
 season's stat line. Headshots are the NHL's official mugs. Age is computed in the browser from the
-birth date so it never goes stale. Two players share a number at camp (the API's data); the game
-compares whatever the API says.
+birth date so it never goes stale.
 
 ## Look and feel
 

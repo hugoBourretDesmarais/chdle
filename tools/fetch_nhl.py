@@ -22,6 +22,9 @@ SEASON = "20262027"
 TEAM = "MTL"
 UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
+# Camp invitees without a sweater number are dropped, plus anyone listed here.
+EXCLUDE = {"Alex Belzile"}
+
 POSITIONS = {"C": "Centre", "L": "Left wing", "R": "Right wing", "D": "Defence", "G": "Goalie"}
 COUNTRIES = {
     "CAN": "Canada", "USA": "United States", "SWE": "Sweden", "FIN": "Finland", "RUS": "Russia",
@@ -100,6 +103,8 @@ def main():
             pid = p["id"]
             first, last = p["firstName"]["default"], p["lastName"]["default"]
             name = f"{first} {last}"
+            if p.get("sweaterNumber") is None or name in EXCLUDE:
+                continue
             landing = get(f"https://api-web.nhle.com/v1/player/{pid}/landing", f"player-{pid}.json")
             portrait = f"{slug(name)}.png"
             dest = PORTRAITS / portrait

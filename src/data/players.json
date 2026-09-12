@@ -34,34 +34,6 @@
   "portrait": "adam-engstrom.png"
  },
  {
-  "id": 8475968,
-  "name": "Alex Belzile",
-  "aliases": [],
-  "number": 60,
-  "position": "RW",
-  "positionName": "Right wing",
-  "shoots": "R",
-  "country": "Canada",
-  "birthplace": "St-Eloi, QC, Canada",
-  "birthDate": "1991-08-31",
-  "heightIn": 72,
-  "weightLb": 198,
-  "draft": null,
-  "sinceSeason": 2020,
-  "nhlGames": 44,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Laval Rocket",
-   "gp": 66,
-   "goals": 29,
-   "assists": 33,
-   "points": 62
-  },
-  "portrait": "alex-belzile.png"
- },
- {
   "id": 8481618,
   "name": "Alex Newhook",
   "aliases": [],
@@ -199,76 +171,6 @@
   "portrait": "arber-xhekaj.png"
  },
  {
-  "id": 8482132,
-  "name": "Brett Berard",
-  "aliases": [],
-  "number": null,
-  "position": "LW",
-  "positionName": "Left wing",
-  "shoots": "L",
-  "country": "United States",
-  "birthplace": "Providence, RI, United States",
-  "birthDate": "2002-09-09",
-  "heightIn": 69,
-  "weightLb": 175,
-  "draft": {
-   "year": 2020,
-   "round": 5,
-   "overall": 134,
-   "team": "NYR",
-   "teamName": "NY Rangers"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 48,
-  "otherTeams": [
-   "Rangers"
-  ],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "NHL",
-   "team": "New York Rangers",
-   "gp": 13,
-   "goals": 0,
-   "assists": 0,
-   "points": 0
-  },
-  "portrait": "brett-berard.png"
- },
- {
-  "id": 8485218,
-  "name": "Bryce Pickford",
-  "aliases": [],
-  "number": null,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "R",
-  "country": "Canada",
-  "birthplace": "Edmonton, AB, Canada",
-  "birthDate": "2006-04-02",
-  "heightIn": 72,
-  "weightLb": 190,
-  "draft": {
-   "year": 2025,
-   "round": 3,
-   "overall": 81,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "WHL",
-   "team": "Medicine Hat Tigers",
-   "gp": 55,
-   "goals": 45,
-   "assists": 38,
-   "points": 83
-  },
-  "portrait": "bryce-pickford.png"
- },
- {
   "id": 8481540,
   "name": "Cole Caufield",
   "aliases": [],
@@ -337,40 +239,6 @@
   "portrait": "david-reinbacher.png"
  },
  {
-  "id": 8482890,
-  "name": "Ethan Samson",
-  "aliases": [],
-  "number": null,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "R",
-  "country": "Canada",
-  "birthplace": "Delta, BC, Canada",
-  "birthDate": "2003-08-23",
-  "heightIn": 73,
-  "weightLb": 180,
-  "draft": {
-   "year": 2021,
-   "round": 6,
-   "overall": 174,
-   "team": "PHI",
-   "teamName": "Philadelphia"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Lehigh Valley Phantoms",
-   "gp": 10,
-   "goals": 0,
-   "assists": 4,
-   "points": 4
-  },
-  "portrait": "ethan-samson.png"
- },
- {
   "id": 8483488,
   "name": "Filip Mesar",
   "aliases": [],
@@ -437,36 +305,6 @@
    "points": 1
   },
   "portrait": "florian-xhekaj.png"
- },
- {
-  "id": 8484125,
-  "name": "Hunter McKown",
-  "aliases": [],
-  "number": null,
-  "position": "C",
-  "positionName": "Centre",
-  "shoots": "R",
-  "country": "United States",
-  "birthplace": "San Jose, CA, United States",
-  "birthDate": "2002-08-18",
-  "heightIn": 73,
-  "weightLb": 192,
-  "draft": null,
-  "sinceSeason": 2026,
-  "nhlGames": 12,
-  "otherTeams": [
-   "Blue Jackets"
-  ],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Cleveland Monsters",
-   "gp": 63,
-   "goals": 9,
-   "assists": 16,
-   "points": 25
-  },
-  "portrait": "hunter-mckown.png"
  },
  {
   "id": 8484984,
@@ -875,76 +713,6 @@
   "portrait": "lucas-condotta.png"
  },
  {
-  "id": 8482687,
-  "name": "Luke Mittelstadt",
-  "aliases": [],
-  "number": null,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "L",
-  "country": "United States",
-  "birthplace": "Eden Prairie, MN, United States",
-  "birthDate": "2003-01-22",
-  "heightIn": 71,
-  "weightLb": 178,
-  "draft": {
-   "year": 2023,
-   "round": 7,
-   "overall": 197,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "NCAA",
-   "team": "Univ. of Minnesota",
-   "gp": 36,
-   "goals": 2,
-   "assists": 19,
-   "points": 21
-  },
-  "portrait": "luke-mittelstadt.png"
- },
- {
-  "id": 8483763,
-  "name": "Maksymilian Szuber",
-  "aliases": [],
-  "number": null,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "L",
-  "country": "Poland",
-  "birthplace": "Opole, Poland",
-  "birthDate": "2002-08-25",
-  "heightIn": 75,
-  "weightLb": 215,
-  "draft": {
-   "year": 2022,
-   "round": 6,
-   "overall": 163,
-   "team": "ARI",
-   "teamName": "Arizona"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 1,
-  "otherTeams": [
-   "Coyotes"
-  ],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Tucson Roadrunners",
-   "gp": 65,
-   "goals": 11,
-   "assists": 16,
-   "points": 27
-  },
-  "portrait": "maksymilian-szuber.png"
- },
- {
   "id": 8476875,
   "name": "Mike Matheson",
   "aliases": [],
@@ -1191,42 +959,6 @@
   "portrait": "phillip-danault.png"
  },
  {
-  "id": 8480054,
-  "name": "Reilly Walsh",
-  "aliases": [],
-  "number": null,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "R",
-  "country": "United States",
-  "birthplace": "Framingham, MA, United States",
-  "birthDate": "1999-04-21",
-  "heightIn": 71,
-  "weightLb": 192,
-  "draft": {
-   "year": 2017,
-   "round": 3,
-   "overall": 81,
-   "team": "NJD",
-   "teamName": "New Jersey"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 1,
-  "otherTeams": [
-   "Devils"
-  ],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "KHL",
-   "team": "Barys Astana",
-   "gp": 68,
-   "goals": 16,
-   "assists": 30,
-   "points": 46
-  },
-  "portrait": "reilly-walsh.png"
- },
- {
   "id": 8478470,
   "name": "Samuel Montembeault",
   "aliases": [],
@@ -1261,76 +993,6 @@
    "svPct": 0.872441
   },
   "portrait": "samuel-montembeault.png"
- },
- {
-  "id": 8481591,
-  "name": "Samuel Poulin",
-  "aliases": [],
-  "number": null,
-  "position": "RW",
-  "positionName": "Right wing",
-  "shoots": "L",
-  "country": "Canada",
-  "birthplace": "Blainville, QC, Canada",
-  "birthDate": "2001-02-25",
-  "heightIn": 74,
-  "weightLb": 217,
-  "draft": {
-   "year": 2019,
-   "round": 1,
-   "overall": 21,
-   "team": "PIT",
-   "teamName": "Pittsburgh"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 15,
-  "otherTeams": [
-   "Penguins"
-  ],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "NHL",
-   "team": "Pittsburgh Penguins",
-   "gp": 2,
-   "goals": 0,
-   "assists": 0,
-   "points": 0
-  },
-  "portrait": "samuel-poulin.png"
- },
- {
-  "id": 8482682,
-  "name": "Sasha Pastujov",
-  "aliases": [],
-  "number": null,
-  "position": "RW",
-  "positionName": "Right wing",
-  "shoots": "L",
-  "country": "United States",
-  "birthplace": "Bradenton, FL, United States",
-  "birthDate": "2003-07-15",
-  "heightIn": 72,
-  "weightLb": 186,
-  "draft": {
-   "year": 2021,
-   "round": 3,
-   "overall": 66,
-   "team": "ANA",
-   "teamName": "Anaheim"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "San Diego Gulls",
-   "gp": 71,
-   "goals": 21,
-   "assists": 36,
-   "points": 57
-  },
-  "portrait": "sasha-pastujov.png"
  },
  {
   "id": 8484533,
