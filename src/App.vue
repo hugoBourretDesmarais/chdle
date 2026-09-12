@@ -25,10 +25,11 @@ import StreakFlame from './components/StreakFlame.vue'
 import Icon from './components/Icon.vue'
 import PlayerModal from './components/PlayerModal.vue'
 import SettingsModal from './components/SettingsModal.vue'
+import FlashcardsPanel from './components/FlashcardsPanel.vue'
 
 const players = rawPlayers.map(decorate)
 
-const mode = ref('daily') // 'daily' | 'practice' | 'gallery'
+const mode = ref('daily') // 'daily' | 'practice' | 'gallery' | 'cards'
 const showHelp = ref(false)
 const showStats = ref(false)
 const showSettings = ref(false)
@@ -301,6 +302,10 @@ const base = import.meta.env.BASE_URL
           @click="mode = 'gallery'">
           <span class="mode-ico">📋</span>
         </button>
+        <button class="mode-btn" :class="{ active: mode === 'cards' }" title="Flashcards — learn the numbers"
+          @click="mode = 'cards'">
+          <span class="mode-ico">🃏</span>
+        </button>
       </div>
 
       <div class="toolbar panel">
@@ -336,6 +341,17 @@ const base = import.meta.env.BASE_URL
         <GalleryPanel
           :characters="pool" :excluded="excluded" :scope-label="scopeName"
           @open="galleryPick = $event" @toggle="toggleExcluded" @set-all="setAllExcluded" />
+      </template>
+
+      <template v-else-if="mode === 'cards'">
+        <section class="panel intro">
+          <h2>LEARN THE NUMBERS</h2>
+          <p class="gallery-hint">
+            Flashcards with spaced repetition, Anki-style: a number you know comes back in days, then weeks;
+            one you miss comes back today. {{ pool.length }} players in the deck.
+          </p>
+        </section>
+        <FlashcardsPanel :players="pool" />
       </template>
 
       <template v-else>
@@ -439,7 +455,7 @@ const base = import.meta.env.BASE_URL
   to { transform: none; opacity: 1; }
 }
 
-.modes { display: flex; gap: 16px; }
+.modes { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .mode-btn {
   position: relative;
   width: 64px;

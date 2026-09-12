@@ -37,6 +37,7 @@ const emit = defineEmits(['close'])
         <tbody>
           <tr><td>🏒 Classic</td><td>One player per day, shared by everyone. Resets at your local midnight.</td></tr>
           <tr><td>🎲 Practice</td><td>Unlimited random players — hit <b>New player</b> any time to reroll.</td></tr>
+          <tr><td>🃏 Flashcards</td><td>Learn the sweater numbers with spaced repetition. Type the number, then rate the card Again, Hard, Good or Easy — like Anki, the wait before it returns grows with every Good. Eight new players a day, progress saved on this device.</td></tr>
           <tr><td>📋 Roster</td><td>Browse the whole 2026-27 camp roster and search by name, position, country or draft. Tap a card for full details, or untick it to keep it out of practice mode.</td></tr>
         </tbody>
       </table>

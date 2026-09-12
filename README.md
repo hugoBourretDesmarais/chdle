@@ -42,8 +42,17 @@ club) after 8, **Last Season** (most recent stat line) after 10. The daily playe
 midnight; stats live in `localStorage`.
 
 Modes: 🏒 **Classic** (one shared daily player), 🎲 **Practice** (unlimited, honours the roster's
-practice pool) and 📋 **Roster** (browse and search the roster, open a card for full details and a
-link to the NHL.com player page).
+practice pool), 📋 **Roster** (browse and search the roster, open a card for full details and a
+link to the NHL.com player page) and 🃏 **Flashcards**.
+
+### Flashcards
+
+Spaced repetition for the sweater numbers, scheduled like Anki's SM-2 (`src/game/anki.js`): each
+card keeps an ease factor and an interval; **Again** resets it to today and re-queues it in the
+session, **Hard** stretches the interval ×1.2 and lowers the ease, **Good** multiplies by the ease,
+**Easy** by the ease ×1.3 and raises it. New cards start at 1 day (Good) or 4 days (Easy), and eight
+new players enter the deck per day. The deck, the daily log and the recall rate live in
+`localStorage` under `chdle:anki`; the roster scope also narrows the deck.
 
 ### Roster scope
 
