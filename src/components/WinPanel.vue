@@ -16,7 +16,7 @@ const base = import.meta.env.BASE_URL
 const copied = ref(false)
 
 const EMOJI = { exact: '🟩', partial: '🟧', wrong: '🟥', neutral: '⬛' }
-const order = ['position', 'shoots', 'country', 'number', 'age', 'height', 'draft', 'since']
+const order = ['position', 'shoots', 'country', 'number', 'age', 'height', 'draft', 'salary', 'since']
 
 const shareText = computed(() => {
   const rows = [...props.guesses].reverse()

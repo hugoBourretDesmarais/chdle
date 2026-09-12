@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted } from 'vue'
 import {
-  draftSentence, formatHeight, formatHeightMetric, formatSeason, formatWeight, lastSeasonSentence,
+  draftSentence, formatHeight, formatHeightMetric, formatSeason, formatWeight, lastSeasonSentence, salarySentence,
 } from '../game/compare.js'
 
 const props = defineProps({
@@ -64,6 +64,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
           <tr><td>Height</td><td>{{ formatHeight(p.heightIn) }} · {{ formatHeightMetric(p.heightIn) }}</td></tr>
           <tr><td>Weight</td><td>{{ formatWeight(p.weightLb) }}</td></tr>
           <tr><td>Draft</td><td>{{ draftSentence(p.draft) }}</td></tr>
+          <tr><td>Cap hit</td><td>{{ salarySentence(p) }}</td></tr>
           <tr><td>With CH since</td><td>{{ formatSeason(p.sinceSeason) }}</td></tr>
           <tr><td>NHL games</td><td>{{ p.nhlGames }}</td></tr>
           <tr><td>Last season</td><td>{{ lastSeasonSentence(p) }}</td></tr>

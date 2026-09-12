@@ -21,6 +21,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 15,
+  "capHit": 896667,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -55,6 +57,8 @@
   },
   "sinceSeason": 2023,
   "nhlGames": 338,
+  "capHit": 2900000,
+  "contractEnd": 2027,
   "otherTeams": [
    "Avalanche"
   ],
@@ -91,6 +95,8 @@
   },
   "sinceSeason": 2024,
   "nhlGames": 369,
+  "capHit": 3750000,
+  "contractEnd": 2026,
   "otherTeams": [
    "Predators"
   ],
@@ -127,6 +133,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 283,
+  "capHit": 2500000,
+  "contractEnd": 2027,
   "otherTeams": [
    "Blue Jackets",
    "Blues"
@@ -158,6 +166,8 @@
   "draft": null,
   "sinceSeason": 2022,
   "nhlGames": 230,
+  "capHit": null,
+  "contractEnd": null,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -192,6 +202,8 @@
   },
   "sinceSeason": 2020,
   "nhlGames": 368,
+  "capHit": 7850000,
+  "contractEnd": 2030,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -226,6 +238,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 2,
+  "capHit": 909167,
+  "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -260,6 +274,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 5,
+  "capHit": 941667,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -294,6 +310,8 @@
   },
   "sinceSeason": 2024,
   "nhlGames": 84,
+  "capHit": 940833,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -328,6 +346,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 17,
+  "capHit": 945833,
+  "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -362,6 +382,8 @@
   },
   "sinceSeason": 2019,
   "nhlGames": 418,
+  "capHit": 2850000,
+  "contractEnd": 2028,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -396,6 +418,8 @@
   },
   "sinceSeason": 2024,
   "nhlGames": 59,
+  "capHit": 965000,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -430,6 +454,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 10,
+  "capHit": 850000,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -464,6 +490,8 @@
   },
   "sinceSeason": 2023,
   "nhlGames": 171,
+  "capHit": 1412500,
+  "contractEnd": 2028,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -498,6 +526,8 @@
   },
   "sinceSeason": 2020,
   "nhlGames": 688,
+  "capHit": 5500000,
+  "contractEnd": 2026,
   "otherTeams": [
    "Blue Jackets"
   ],
@@ -534,6 +564,8 @@
   },
   "sinceSeason": 2022,
   "nhlGames": 282,
+  "capHit": 7600000,
+  "contractEnd": 2032,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -568,6 +600,8 @@
   },
   "sinceSeason": 2022,
   "nhlGames": 208,
+  "capHit": 5550000,
+  "contractEnd": 2030,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -602,6 +636,8 @@
   },
   "sinceSeason": 2022,
   "nhlGames": 306,
+  "capHit": 3600000,
+  "contractEnd": 2026,
   "otherTeams": [
    "Blackhawks"
   ],
@@ -638,6 +674,8 @@
   },
   "sinceSeason": 2023,
   "nhlGames": 166,
+  "capHit": 8850000,
+  "contractEnd": 2033,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -666,6 +704,8 @@
   "draft": null,
   "sinceSeason": 2022,
   "nhlGames": 11,
+  "capHit": 850000,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -700,6 +740,8 @@
   },
   "sinceSeason": 2022,
   "nhlGames": 705,
+  "capHit": 6000000,
+  "contractEnd": 2030,
   "otherTeams": [
    "Panthers",
    "Penguins"
@@ -737,6 +779,8 @@
   },
   "sinceSeason": 2019,
   "nhlGames": 537,
+  "capHit": 7875000,
+  "contractEnd": 2029,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -771,6 +815,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 468,
+  "capHit": 9500000,
+  "contractEnd": 2032,
   "otherTeams": [
    "Islanders"
   ],
@@ -807,6 +853,8 @@
   },
   "sinceSeason": 2024,
   "nhlGames": 100,
+  "capHit": 941667,
+  "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -841,6 +889,8 @@
   },
   "sinceSeason": 2022,
   "nhlGames": 28,
+  "capHit": 853333,
+  "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -875,6 +925,8 @@
   },
   "sinceSeason": 2015,
   "nhlGames": 786,
+  "capHit": 5500000,
+  "contractEnd": 2026,
   "otherTeams": [
    "Blackhawks",
    "Kings"
@@ -912,6 +964,8 @@
   },
   "sinceSeason": 2021,
   "nhlGames": 231,
+  "capHit": 3150000,
+  "contractEnd": 2026,
   "otherTeams": [
    "Panthers"
   ],
@@ -948,6 +1002,8 @@
   },
   "sinceSeason": 2026,
   "nhlGames": 0,
+  "capHit": 968333,
+  "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
    "season": "2025-26",
@@ -982,6 +1038,8 @@
   },
   "sinceSeason": 2025,
   "nhlGames": 175,
+  "capHit": null,
+  "contractEnd": null,
   "otherTeams": [
    "Blues"
   ],

@@ -7,6 +7,7 @@ export const COLUMNS = [
   { key: 'age', label: 'Age' },
   { key: 'height', label: 'Height' },
   { key: 'draft', label: 'Draft' },
+  { key: 'salary', label: 'Cap hit' },
   { key: 'since', label: 'With CH since' },
 ]
 
@@ -77,6 +78,7 @@ export function compareGuess(guess, answer) {
   cells.age = { ...numResult(guess.age, answer.age), text: String(guess.age) }
   cells.height = { ...numResult(guess.heightIn, answer.heightIn), text: formatHeight(guess.heightIn) }
   cells.draft = { ...draftResult(guess.draft, answer.draft), text: formatDraft(guess.draft), sub: draftSub(guess.draft) }
+  cells.salary = { ...numResult(guess.capHit, answer.capHit), text: formatSalary(guess.capHit) }
   cells.since = { ...numResult(guess.sinceSeason, answer.sinceSeason), text: formatSeason(guess.sinceSeason) }
   return cells
 }
@@ -96,6 +98,17 @@ export function formatHeightMetric(inches) {
 
 export function formatWeight(lb) {
   return lb == null ? '?' : `${lb} lb (${Math.round(lb * 0.4536)} kg)`
+}
+
+// Unsigned restricted free agents have no cap hit yet.
+export function formatSalary(d) {
+  if (d == null) return 'RFA'
+  return d >= 1e6 ? `$${(d / 1e6).toFixed(2).replace(/0$/, '')}M` : `$${Math.round(d / 1000)}K`
+}
+
+export function salarySentence(p) {
+  if (p.capHit == null) return 'Unsigned restricted free agent'
+  return `$${p.capHit.toLocaleString('en-US')} through ${formatSeason(p.contractEnd)}`
 }
 
 export function formatSeason(startYear) {

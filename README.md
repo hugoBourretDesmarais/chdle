@@ -4,7 +4,7 @@ Guess the daily *Montréal Canadiens* player, one guess at a time, using colour-
 comparisons. A sibling of [OnePieceDle](../onepiecedle) and [AvatarDle](../avatardle) that shares
 their engine and look, retargeted to the 2026-27 roster.
 
-Built with Vue 3 + Vite. Fully responsive — all nine columns fit on a phone screen.
+Built with Vue 3 + Vite. Fully responsive — all ten columns fit on a phone screen.
 
 ## Play
 
@@ -34,6 +34,7 @@ Type a player name and submit. Each guess reveals a row of tiles:
 | Age | age today, with arrows |
 | Height | feet and inches, with arrows |
 | Draft | round and drafting club (`R1` over `MTL · 2022`), arrows by round; undrafted players only match each other |
+| Cap hit | 2026-27 salary-cap hit with arrows (`$7.88M`); an unsigned RFA shows `RFA` and only matches another one |
 | With CH since | first regular season with the Canadiens; newcomers and prospects count as 2026-27 |
 
 Clues unlock as you guess: **Birthplace** after 5 tries, **Draft** (year, round, overall pick and
@@ -66,7 +67,8 @@ node api/tools/gen_data.mjs          # regenerate the worker's copy of the roste
 ```
 
 `fetch_nhl.py` reads `/v1/roster/MTL/20262027` and each player's `/v1/player/{id}/landing` for the
-draft record, birthplace, NHL games played, the first regular season with the club and the last
+draft record, birthplace, NHL games played,
+cap hit (hand-kept in `tools/salaries.json` from CapWages and HighDanger, since the NHL API has no contracts), the first regular season with the club and the last
 season's stat line. Headshots are the NHL's official mugs. Age is computed in the browser from the
 birth date so it never goes stale.
 

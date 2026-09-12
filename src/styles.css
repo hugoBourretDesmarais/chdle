@@ -14,7 +14,7 @@
   --ink: #10203a;
   --habs-red: #af1e2d;
   --habs-blue: #192168;
-  --tile-size: 76px;
+  --tile-size: 72px;
   --tile-gap: 6px;
   --tile-border: 2px;
   --tile-pad: 3px;
@@ -126,11 +126,11 @@ button { font-family: inherit; cursor: pointer; }
 .swatch.partial { background: var(--yellow); }
 .swatch.wrong { background: var(--red); }
 
-/* Fit all 9 columns on screen: 9 tiles + 8 gaps + page padding <= 100vw */
+/* Fit all 10 columns on screen: 10 tiles + 9 gaps + page padding <= 100vw */
 @media (max-width: 760px) {
   :root {
     --tile-gap: 3px;
-    --tile-size: min(64px, calc((100vw - 50px) / 9));
+    --tile-size: min(64px, calc((100vw - 52px) / 10));
     --tile-border: 1px;
     --tile-pad: 1px;
     --tile-inset: 4px;

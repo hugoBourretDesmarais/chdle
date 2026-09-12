@@ -25,6 +25,7 @@ function haystack(c) {
     c.number != null ? `#${c.number} ${c.number}` : '',
     c.draft ? `${c.draft.team} ${c.draft.teamName} ${c.draft.year} round ${c.draft.round}` : 'undrafted',
     c.nhlGames ? 'veteran' : 'prospect',
+    c.capHit == null ? 'rfa unsigned' : '',
   ].filter(Boolean).join(' '))
 }
 
@@ -47,6 +48,7 @@ const results = computed(() => {
     if (key === 'number') return (a.number ?? 999) - (b.number ?? 999)
     if (key === 'position') return POS_ORDER.indexOf(a.position) - POS_ORDER.indexOf(b.position) || a.name.localeCompare(b.name)
     if (key === 'age') return (b.age ?? -1) - (a.age ?? -1)
+    if (key === 'salary') return (b.capHit ?? -1) - (a.capHit ?? -1) || a.name.localeCompare(b.name)
     if (key === 'since') return a.sinceSeason - b.sinceSeason || a.name.localeCompare(b.name)
     return 0
   })
@@ -68,6 +70,7 @@ const results = computed(() => {
             <option value="name">Name (A–Z)</option>
             <option value="position">Position</option>
             <option value="age">Oldest</option>
+            <option value="salary">Highest cap hit</option>
             <option value="since">Longest with CH</option>
           </select>
         </label>

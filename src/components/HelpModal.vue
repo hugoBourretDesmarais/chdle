@@ -13,7 +13,7 @@ const emit = defineEmits(['close'])
         <li><span class="swatch partial"></span><b>Yellow</b> — partial match (some overlap)</li>
         <li><span class="swatch wrong"></span><b>Red</b> — no match</li>
       </ul>
-      <p>On <b>Number</b>, <b>Age</b>, <b>Height</b>, <b>Draft</b> and <b>With CH since</b>, an arrow shows whether the hidden player's value is <b>▲ higher/later</b> or <b>▼ lower/earlier</b> than your guess.</p>
+      <p>On <b>Number</b>, <b>Age</b>, <b>Height</b>, <b>Draft</b>, <b>Cap hit</b> and <b>With CH since</b>, an arrow shows whether the hidden player's value is <b>▲ higher/later</b> or <b>▼ lower/earlier</b> than your guess.</p>
 
       <h3>Properties</h3>
       <table class="props">
@@ -25,6 +25,7 @@ const emit = defineEmits(['close'])
           <tr><td>Age</td><td>Age today</td></tr>
           <tr><td>Height</td><td>In feet and inches; the arrow points to taller or shorter</td></tr>
           <tr><td>Draft</td><td>Round and the club that picked the player. Yellow when only the round or only the club matches; the arrow follows the round. Undrafted players only match each other</td></tr>
+          <tr><td>Cap hit</td><td>2026-27 salary-cap hit, with arrows. An unsigned restricted free agent shows RFA and only matches another one</td></tr>
           <tr><td>With CH since</td><td>First regular season with the Canadiens. A newcomer or prospect counts as 2026-27</td></tr>
         </tbody>
       </table>

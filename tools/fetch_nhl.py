@@ -19,6 +19,7 @@ CACHE = HERE / "cache"
 PORTRAITS = HERE.parent / "public" / "portraits"
 OUT = HERE.parent / "src" / "data" / "players.json"
 SEASON = "20262027"
+SALARIES = json.loads((HERE / "salaries.json").read_text())
 TEAM = "MTL"
 UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
@@ -118,6 +119,9 @@ def main():
                             if s.get("teamCommonName", {}).get("default") not in (None, "Canadiens")})
             dd = landing.get("draftDetails")
             pos = p["positionCode"]
+            cap_hit, contract_end = SALARIES.get(name, (None, None))
+            if name not in SALARIES:
+                print(f"no salary on file for {name}")
             players.append({
                 "id": pid,
                 "name": name,
@@ -138,6 +142,9 @@ def main():
                 # First regular season with the club; a newcomer's is the season being built.
                 "sinceSeason": int(str(min(mtl))[:4]) if mtl else int(SEASON[:4]),
                 "nhlGames": sum(s.get("gamesPlayed", 0) for s in nhl),
+                # 2026-27 cap hit in dollars; None for an unsigned RFA.
+                "capHit": cap_hit,
+                "contractEnd": contract_end,
                 "otherTeams": other,
                 "lastSeason": last_season(landing, pos),
                 "portrait": portrait,
