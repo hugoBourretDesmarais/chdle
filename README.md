@@ -54,7 +54,7 @@ player. Over the wire the scope travels under the original `arcLimit`/`arc_limit
 ## Data
 
 The Canadiens' 2026-27 roster as the NHL API lists it at training camp, minus camp invitees without a
-sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (31 players at the time of
+sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (29 players at the time of
 writing). Roster moves are picked up by rerunning the fetch:
 
 ```bash
@@ -77,7 +77,7 @@ instead of parchment), a drawn SVG wordmark (a red crest with the blue band, cro
 puck in front of letters cycling *bleu, blanc, rouge* under a generated wear map), a streak flame,
 drawn toolbar icons, and a slowly panning backdrop. Backdrops are Bell Centre photographs from
 Wikimedia Commons (CC BY-SA, credited in the corner), fetched and encoded by
-`tools/download_backgrounds.py`; `?bg=1`–`?bg=3` previews the alternates.
+`tools/download_backgrounds.py`; `?bg=1`–`?bg=3` previews the alternates. The wordmark is the club's public-domain CH mark from Wikimedia Commons followed by "DLE" and a small drawn crest.
 
 ## Backend (solve counter + leaderboard)
 

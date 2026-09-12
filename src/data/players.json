@@ -239,40 +239,6 @@
   "portrait": "david-reinbacher.png"
  },
  {
-  "id": 8483488,
-  "name": "Filip Mesar",
-  "aliases": [],
-  "number": 46,
-  "position": "RW",
-  "positionName": "Right wing",
-  "shoots": "R",
-  "country": "Slovakia",
-  "birthplace": "Kezmarok, Slovakia",
-  "birthDate": "2004-01-03",
-  "heightIn": 70,
-  "weightLb": 184,
-  "draft": {
-   "year": 2022,
-   "round": 1,
-   "overall": 26,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Laval Rocket",
-   "gp": 71,
-   "goals": 9,
-   "assists": 18,
-   "points": 27
-  },
-  "portrait": "filip-mesar.png"
- },
- {
   "id": 8484403,
   "name": "Florian Xhekaj",
   "aliases": [],
@@ -886,40 +852,6 @@
    "points": 1
   },
   "portrait": "owen-beck.png"
- },
- {
-  "id": 8485008,
-  "name": "Owen Protz",
-  "aliases": [],
-  "number": 68,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "L",
-  "country": "Canada",
-  "birthplace": "Ottawa, ON, Canada",
-  "birthDate": "2006-02-07",
-  "heightIn": 73,
-  "weightLb": 213,
-  "draft": {
-   "year": 2024,
-   "round": 4,
-   "overall": 102,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2026,
-  "nhlGames": 0,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "OHL",
-   "team": "Brantford Bulldogs",
-   "gp": 64,
-   "goals": 5,
-   "assists": 18,
-   "points": 23
-  },
-  "portrait": "owen-protz.png"
  },
  {
   "id": 8476479,

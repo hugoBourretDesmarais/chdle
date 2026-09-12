@@ -4,23 +4,27 @@ import { fontsReady } from '../game/textfit.js'
 // Drawn as SVG rather than styled HTML: the wordmark needs three stacked
 // strokes, a per-letter gradient, a gloss sweep and a grain wash, which
 // text-shadow stacking can't express cleanly.
-const WORD = 'CHDLE'
+const WORD = 'DLE'
 const LETTERS = [...WORD]
 const base = import.meta.env.BASE_URL
 
-// Lilita One at 118px has an 83-unit cap height and a 6-unit left bearing;
-// the crest is scaled to that height and the text starts just past its ring.
-const TX = 134
+// The CH mark is 437x299; drawn 176 wide it stands 120 tall, a touch over the
+// 83-unit cap height so it reads as the subject. The word starts just past it.
+const CH_W = 176
+const CH_H = CH_W * 298.85 / 437.31
+const TX = CH_W + 18
 // Browsers disagree on how wide Lilita One renders (and Safari mangles
 // textLength), so the size is measured once the font is in and scaled down to
 // fit rather than pinned.
-const MAX_W = 612
+const MAX_W = 430
 const BASE_SIZE = 118
 const probe = ref(null)
 const size = ref(BASE_SIZE)
 // Splitting the word into one tspan per letter loses the kerning the stroked
 // copies keep, so each fill letter is pinned to where the unsplit run puts it.
 const xs = ref(null)
+// Where the word ends, so the small crest can trail it.
+const endX = ref(TX + 400)
 
 function fit() {
   const el = probe.value
@@ -30,6 +34,7 @@ function fit() {
   const k = size.value / BASE_SIZE
   const x0 = el.getStartPositionOfChar(0).x
   xs.value = LETTERS.map((_, i) => TX + (el.getStartPositionOfChar(i).x - x0) * k)
+  endX.value = TX + w * k
 }
 onMounted(() => {
   fit()
@@ -38,7 +43,7 @@ onMounted(() => {
 watch(fontsReady, fit)
 
 // Bleu, blanc, rouge — the letters cycle through the sweater.
-const CYCLE = ['url(#gRed)', 'url(#gBlue)', 'url(#gWhite)']
+const CYCLE = ['url(#gBlue)', 'url(#gWhite)', 'url(#gRed)']
 const fillFor = i => CYCLE[i % CYCLE.length]
 </script>
 
@@ -114,15 +119,17 @@ const fillFor = i => CYCLE[i % CYCLE.length]
           <text class="t" :x="TX" y="112" fill="#fff">{{ WORD }}</text>
         </mask>
         <mask id="shineMask">
-          <circle cx="70" cy="70.6" r="48" fill="#fff" />
           <text class="t" :x="TX" y="112" fill="#fff">{{ WORD }}</text>
         </mask>
       </defs>
 
-      <!-- the crest: positioned by the outer group so the CSS animation on the
-           inner one doesn't override the placement transform -->
-      <g transform="translate(13.75 14.35) scale(1.125)" filter="url(#cast)">
-        <g class="mark">
+      <!-- the club's CH mark, from Wikimedia Commons (public domain) -->
+      <g class="mark" filter="url(#cast)">
+        <image :href="base + 'logo/ch.svg'" x="0" :y="112 - CH_H + 6" :width="CH_W" :height="CH_H" />
+      </g>
+
+      <!-- a small drawn crest trails the word -->
+      <g class="tail" :transform="`translate(${endX + 10} 44) scale(0.56)`" filter="url(#cast)">
           <circle cx="50" cy="50" r="50" fill="#0c1424" />
           <circle cx="50" cy="50" r="48" fill="url(#ringG)" />
           <circle cx="50" cy="50" r="43" fill="url(#crestDisc)" />
@@ -148,7 +155,6 @@ const fillFor = i => CYCLE[i % CYCLE.length]
 
           <circle cx="50" cy="50" r="43" fill="url(#crestSheen)" />
           <circle cx="50" cy="50" r="40" fill="none" stroke="#0c1424" stroke-width="1.5" opacity=".5" />
-        </g>
       </g>
 
       <g class="letters">
@@ -203,7 +209,14 @@ const fillFor = i => CYCLE[i % CYCLE.length]
   transform-origin: center;
 }
 .mark {
-  animation: mark-in .6s cubic-bezier(.2, .9, .3, 1.5) both, sway 6s ease-in-out 1.1s infinite;
+  animation: mark-in .6s cubic-bezier(.2, .9, .3, 1.5) both, float 6s ease-in-out 1.1s infinite;
+}
+.tail {
+  animation: tail-in .5s cubic-bezier(.2, .9, .3, 1.5) both .25s;
+}
+@keyframes tail-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .letters {
   animation: word-in .55s cubic-bezier(.2, .85, .3, 1.35) both .1s, float 6s ease-in-out 1.1s infinite;
@@ -260,7 +273,7 @@ const fillFor = i => CYCLE[i % CYCLE.length]
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mark, .letters, .grain { animation: none; }
+  .mark, .letters, .grain, .tail { animation: none; }
   .shine { display: none; }
 }
 </style>

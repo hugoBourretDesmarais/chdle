@@ -23,7 +23,7 @@ TEAM = "MTL"
 UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
 # Camp invitees without a sweater number are dropped, plus anyone listed here.
-EXCLUDE = {"Alex Belzile"}
+EXCLUDE = {"Alex Belzile", "Filip Mesar", "Owen Protz"}
 
 POSITIONS = {"C": "Centre", "L": "Left wing", "R": "Right wing", "D": "Defence", "G": "Goalie"}
 COUNTRIES = {

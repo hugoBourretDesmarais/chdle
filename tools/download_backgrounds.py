@@ -20,10 +20,10 @@ UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
 # slug -> (Commons file, short label)
 SOURCES = {
-    "bell-centre": ("Centre Bell, Montreal Canadiens 3, Ottawa Senators 4, Centre Bell, Montreal, Quebec (30067521005).jpg", "Bell Centre"),
+    "bell-centre": ("Bell Centre Montreal April 2016.JPG", "Bell Centre"),
+    "rink": ("Intérieur du Centre Bell Center Inside.JPG", "Bell Centre bowl"),
+    "crease": ("Mike Condon, Montreal Canadiens 3, Ottawa Senators 4, Centre Bell, Montreal, Quebec (29773407730).jpg", "The crease"),
     "scoreboard": ("Huge Centre Bell and Bright Scoreboard TV Panels, Montreal Canadiens 3, Ottawa Senators 4, Centre Bell, Montreal, Quebec (30033589926).jpg", "Bell Centre scoreboard"),
-    "retired-numbers": ("Chandails rétirés CH, Plante, Moore, Harvey, M.Richard, Bouchard, Lach, Morenz.jpg", "Retired numbers"),
-    "centre-ice": ("Glace Centre Bell Centre Ice.JPG", "Centre ice"),
 }
 TARGET_W = 1920
 RATIO = 16 / 9

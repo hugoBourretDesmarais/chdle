@@ -1,26 +1,26 @@
 [
  {
   "slug": "bell-centre",
-  "label": "Bell Centre · Ken Lund from Reno, Nevada, USA (CC BY-SA 2.0) via Wikimedia Commons",
-  "file": "Centre Bell, Montreal Canadiens 3, Ottawa Senators 4, Centre Bell, Montreal, Quebec (30067521005).jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Centre_Bell,_Montreal_Canadiens_3,_Ottawa_Senators_4,_Centre_Bell,_Montreal,_Quebec_(30067521005).jpg"
+  "label": "Bell Centre · Danclahane (CC BY-SA 4.0) via Wikimedia Commons",
+  "file": "Bell Centre Montreal April 2016.JPG",
+  "url": "https://commons.wikimedia.org/wiki/File:Bell_Centre_Montreal_April_2016.JPG"
+ },
+ {
+  "slug": "rink",
+  "label": "Bell Centre bowl · Fleurdelisé (CC BY-SA 3.0) via Wikimedia Commons",
+  "file": "Intérieur du Centre Bell Center Inside.JPG",
+  "url": "https://commons.wikimedia.org/wiki/File:Int%C3%A9rieur_du_Centre_Bell_Center_Inside.JPG"
+ },
+ {
+  "slug": "crease",
+  "label": "The crease · Ken Lund from Reno, Nevada, USA (CC BY-SA 2.0) via Wikimedia Commons",
+  "file": "Mike Condon, Montreal Canadiens 3, Ottawa Senators 4, Centre Bell, Montreal, Quebec (29773407730).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Mike_Condon,_Montreal_Canadiens_3,_Ottawa_Senators_4,_Centre_Bell,_Montreal,_Quebec_(29773407730).jpg"
  },
  {
   "slug": "scoreboard",
   "label": "Bell Centre scoreboard · Ken Lund from Reno, Nevada, USA (CC BY-SA 2.0) via Wikimedia Commons",
   "file": "Huge Centre Bell and Bright Scoreboard TV Panels, Montreal Canadiens 3, Ottawa Senators 4, Centre Bell, Montreal, Quebec (30033589926).jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Huge_Centre_Bell_and_Bright_Scoreboard_TV_Panels,_Montreal_Canadiens_3,_Ottawa_Senators_4,_Centre_Bell,_Montreal,_Quebec_(30033589926).jpg"
- },
- {
-  "slug": "retired-numbers",
-  "label": "Retired numbers · Maniacduhockey (CC BY-SA 3.0) via Wikimedia Commons",
-  "file": "Chandails rétirés CH, Plante, Moore, Harvey, M.Richard, Bouchard, Lach, Morenz.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Chandails_r%C3%A9tir%C3%A9s_CH,_Plante,_Moore,_Harvey,_M.Richard,_Bouchard,_Lach,_Morenz.jpg"
- },
- {
-  "slug": "centre-ice",
-  "label": "Centre ice · Fleurdelisé (CC BY-SA 4.0) via Wikimedia Commons",
-  "file": "Glace Centre Bell Centre Ice.JPG",
-  "url": "https://commons.wikimedia.org/wiki/File:Glace_Centre_Bell_Centre_Ice.JPG"
  }
 ]
