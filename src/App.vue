@@ -647,6 +647,11 @@ button.tool:hover { background: rgba(36, 74, 124, .12); }
   line-height: 1.15;
 }
 
+/* Ten labels across a phone need a smaller face and permission to break. */
+@media (max-width: 760px) {
+  .head-cell { font-size: 7.5px; overflow-wrap: anywhere; letter-spacing: 0; }
+}
+
 .yesterday {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, .9);
