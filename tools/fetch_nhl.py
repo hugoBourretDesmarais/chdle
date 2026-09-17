@@ -126,8 +126,11 @@ def main():
             dd = landing.get("draftDetails")
             pos = p["positionCode"]
             cap_hit, contract_end = SALARIES.get(name, (None, None))
+            # Only NHL contracts on file make the cut; camp invitees and AHL
+            # deals now get sweater numbers in the feed too.
             if name not in SALARIES:
-                print(f"no salary on file for {name}")
+                print(f"skipping {name}: no NHL contract on file")
+                continue
             players.append({
                 "id": pid,
                 "name": name,
