@@ -37,8 +37,8 @@ Type a player name and submit. Each guess reveals a row of tiles:
 | Cap hit | 2026-27 salary-cap hit with arrows (`$7.88M`); an unsigned RFA would show `RFA` and only match another one |
 | With CH since | first regular season with the Canadiens; newcomers and prospects count as 2026-27 |
 
-Clues unlock as you guess: **Birthplace** after 5 tries, **Draft** (year, round, overall pick and
-club) after 8, **Last Season** (most recent stat line) after 10. The daily player resets at local
+Clues unlock as you guess: **Birthplace** after 5 tries, **Last Season** (most recent stat line)
+after 8, **Draft** (year, round, overall pick and club) after 10. The daily player resets at local
 midnight; stats live in `localStorage`.
 
 Modes: 🏒 **Classic** (one shared daily player), 🎲 **Practice** (unlimited, honours the roster's

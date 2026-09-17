@@ -10,8 +10,8 @@ const props = defineProps({
 })
 
 const BIRTH_AT = 5
-const DRAFT_AT = 8
-const SEASON_AT = 10
+const SEASON_AT = 8
+const DRAFT_AT = 10
 
 const showBirth = ref(false)
 const showDraft = ref(false)
@@ -44,6 +44,13 @@ const seasonText = computed(() => lastSeasonSentence(props.answer))
       <p v-if="showBirth && birthUnlocked" class="clue-value">{{ answer.birthplace }}</p>
     </div>
     <div class="clue">
+      <button class="clue-btn" :disabled="!seasonUnlocked" @click="showSeason = !showSeason">
+        <Icon class="clue-ico" name="stats" :size="30" />
+        <span class="clue-label">Last Season Clue</span>
+        <span v-if="!seasonUnlocked" class="clue-lock">in {{ seasonLeft }} {{ seasonLeft === 1 ? 'try' : 'tries' }}</span>
+      </button>
+      <p v-if="showSeason && seasonUnlocked" class="clue-value">{{ seasonText }}</p>
+      <div class="clue">
       <button class="clue-btn" :disabled="!draftUnlocked" @click="showDraft = !showDraft">
         <Icon class="clue-ico" name="draft" :size="30" />
         <span class="clue-label">Draft Clue</span>
@@ -51,14 +58,7 @@ const seasonText = computed(() => lastSeasonSentence(props.answer))
       </button>
       <p v-if="showDraft && draftUnlocked" class="clue-value">{{ draftText }}</p>
     </div>
-    <div class="clue">
-      <button class="clue-btn" :disabled="!seasonUnlocked" @click="showSeason = !showSeason">
-        <Icon class="clue-ico" name="stats" :size="30" />
-        <span class="clue-label">Last Season Clue</span>
-        <span v-if="!seasonUnlocked" class="clue-lock">in {{ seasonLeft }} {{ seasonLeft === 1 ? 'try' : 'tries' }}</span>
-      </button>
-      <p v-if="showSeason && seasonUnlocked" class="clue-value">{{ seasonText }}</p>
-    </div>
+  </div>
   </div>
 </template>
 

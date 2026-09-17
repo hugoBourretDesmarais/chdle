@@ -25,6 +25,8 @@ UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
 # Camp invitees without a sweater number are dropped, plus anyone listed here.
 EXCLUDE = {"Alex Belzile", "Filip Mesar", "Owen Protz", "Tyler Thorpe"}
+# NHL.com lists Kreider at centre on the 2026-27 roster; he has played wing his whole career.
+POSITION_FIX = {"Chris Kreider": "L"}
 
 POSITIONS = {"C": "Centre", "L": "Left wing", "R": "Right wing", "D": "Defence", "G": "Goalie"}
 COUNTRIES = {
@@ -124,7 +126,7 @@ def main():
             other = sorted({s.get("teamCommonName", {}).get("default") for s in nhl
                             if s.get("teamCommonName", {}).get("default") not in (None, "Canadiens")})
             dd = landing.get("draftDetails")
-            pos = p["positionCode"]
+            pos = POSITION_FIX.get(name, p["positionCode"])
             cap_hit, contract_end = SALARIES.get(name, (None, None))
             if name not in SALARIES:
                 print(f"no salary on file for {name}")
