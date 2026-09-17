@@ -43,16 +43,23 @@ midnight; stats live in `localStorage`.
 
 Modes: 🏒 **Classic** (one shared daily player), 🎲 **Practice** (unlimited, honours the roster's
 practice pool), 📋 **Roster** (browse and search the roster, open a card for full details and a
-link to the NHL.com player page) and 🃏 **Flashcards**.
+link to the NHL.com player page), 🛡️ **Logo quiz** and 🃏 **Flashcards**.
+
+### Logo quiz
+
+Name the NHL club from its logo, all 32 of them. Each miss unlocks a hint (conference, division,
+founding year, first letter); a solve extends the streak, showing the answer ends it. Best streak and
+totals live under `chdle:logos`. Team data and logos come from `tools/fetch_teams.py`, which reads the
+NHL standings feed into `src/data/teams.json` and saves the SVG logos to `public/logos/`.
 
 ### Flashcards
 
-Spaced repetition for the sweater numbers, scheduled like Anki's SM-2 (`src/game/anki.js`): each
+Two decks — **Numbers** (sweater numbers) and **Logos** (team names) — with spaced repetition scheduled like Anki's SM-2 (`src/game/anki.js`): each
 card keeps an ease factor and an interval; **Again** resets it to today and re-queues it in the
 session, **Hard** stretches the interval ×1.2 and lowers the ease, **Good** multiplies by the ease,
 **Easy** by the ease ×1.3 and raises it. New cards start at 1 day (Good) or 4 days (Easy), and eight
 new players enter the deck per day, most NHL games played first, so the regulars come before the call-ups. The deck, the daily log and the recall rate live in
-`localStorage` under `chdle:anki`; the roster scope also narrows the deck.
+`localStorage` under `chdle:anki` (numbers) and `chdle:anki:logos`; the roster scope also narrows the numbers deck. New logo cards arrive by division, Atlantic first.
 
 ### Roster scope
 

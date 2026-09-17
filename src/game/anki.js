@@ -1,9 +1,9 @@
-// Spaced repetition for sweater numbers, scheduled the way Anki's SM-2 does:
-// each card carries an ease factor and an interval in days, and a rating
-// stretches or resets them. Progress lives in localStorage under chdle:anki.
+// Spaced repetition scheduled the way Anki's SM-2 does: each card carries an
+// ease factor and an interval in days, and a rating stretches or resets them.
+// One deck per subject in localStorage: chdle:anki (numbers), chdle:anki:logos.
 import { localDateString } from './state.js'
 
-const KEY = 'chdle:anki'
+export const DECKS = { numbers: 'chdle:anki', logos: 'chdle:anki:logos' }
 export const NEW_PER_DAY = 8
 const MIN_EASE = 1.3
 
@@ -14,17 +14,17 @@ export const RATINGS = [
   { key: 'easy', label: 'Easy' },
 ]
 
-export function loadDeck() {
+export function loadDeck(key = DECKS.numbers) {
   try {
-    const d = JSON.parse(localStorage.getItem(KEY))
+    const d = JSON.parse(localStorage.getItem(key))
     return d && d.cards ? d : { cards: {}, log: {} }
   } catch {
     return { cards: {}, log: {} }
   }
 }
 
-export function saveDeck(deck) {
-  localStorage.setItem(KEY, JSON.stringify(deck))
+export function saveDeck(deck, key = DECKS.numbers) {
+  localStorage.setItem(key, JSON.stringify(deck))
 }
 
 function addDays(dateStr, n) {
@@ -89,11 +89,13 @@ export function introducedToday(deck, today = localDateString()) {
 }
 
 // New cards arrive most-experienced first: the regulars you see every game are
-// the numbers worth knowing before the call-ups.
+// the numbers worth knowing before the call-ups. Cards without games (teams)
+// fall back to their preset order.
 export function unseenPlayers(deck, players) {
   return players
     .filter(p => !deck.cards[p.name])
-    .sort((a, b) => b.nhlGames - a.nhlGames || a.name.localeCompare(b.name))
+    .sort((a, b) => (b.nhlGames ?? 0) - (a.nhlGames ?? 0)
+      || (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))
 }
 
 // Due cards first, oldest due at the front; then new cards up to the daily cap.
@@ -132,7 +134,7 @@ export function deckStats(deck, players, today = localDateString()) {
   }
 }
 
-export function resetDeck() {
-  localStorage.removeItem(KEY)
+export function resetDeck(key = DECKS.numbers) {
+  localStorage.removeItem(key)
   return { cards: {}, log: {} }
 }

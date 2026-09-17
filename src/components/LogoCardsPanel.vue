@@ -2,18 +2,19 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import Icon from './Icon.vue'
 import {
-  NEW_PER_DAY, RATINGS, buildQueue, deckStats, loadDeck, markIntroduced, preview, rate, resetDeck,
+  DECKS, NEW_PER_DAY, RATINGS, buildQueue, deckStats, loadDeck, markIntroduced, preview, rate, resetDeck,
   saveDeck, unseenPlayers,
 } from '../game/anki.js'
+import { isTeam, suggestTeams } from '../game/teams.js'
 
 const props = defineProps({
-  players: { type: Array, required: true },
+  teams: { type: Array, required: true },
 })
-const emit = defineEmits(['open'])
 
+const KEY = DECKS.logos
 const base = import.meta.env.BASE_URL
-const deck = ref(loadDeck())
-const queue = ref([]) // players still to review this session
+const deck = ref(loadDeck(KEY))
+const queue = ref([])
 const current = ref(null)
 const answer = ref('')
 const revealed = ref(false)
@@ -23,10 +24,11 @@ const sessionCorrect = ref(0)
 const inputEl = ref(null)
 const finished = ref(false)
 
-const stats = computed(() => deckStats(deck.value, props.players))
+const stats = computed(() => deckStats(deck.value, props.teams))
 const isNew = computed(() => current.value && !deck.value.cards[current.value.name])
 const card = computed(() => (current.value ? deck.value.cards[current.value.name] : null))
 const waits = computed(() => preview(card.value ?? undefined))
+const suggestions = computed(() => (revealed.value ? [] : suggestTeams(answer.value, props.teams, new Set(), 5)))
 
 function fmtWait(days) {
   if (days === 0) return 'now'
@@ -36,7 +38,7 @@ function fmtWait(days) {
 }
 
 function start() {
-  const q = buildQueue(deck.value, props.players)
+  const q = buildQueue(deck.value, props.teams)
   queue.value = [...q.due, ...q.fresh]
   done.value = 0
   sessionCorrect.value = 0
@@ -55,10 +57,10 @@ function next() {
   nextTick(() => inputEl.value?.focus())
 }
 
-function check() {
+function check(text = answer.value) {
   if (revealed.value || !current.value) return
-  const n = Number(answer.value)
-  correct.value = Number.isInteger(n) && n === current.value.number
+  answer.value = text
+  correct.value = isTeam(text, current.value, props.teams)
   revealed.value = true
   if (isNew.value) markIntroduced(deck.value)
 }
@@ -66,17 +68,14 @@ function check() {
 function grade(rating) {
   if (!revealed.value) return
   rate(deck.value, current.value.name, rating, correct.value)
-  saveDeck(deck.value)
+  saveDeck(deck.value, KEY)
   deck.value = { ...deck.value }
   done.value += 1
   if (correct.value) sessionCorrect.value += 1
-  // Anki shows a lapsed card again before the session ends.
   if (rating === 'again') queue.value.splice(Math.min(3, queue.value.length), 0, current.value)
   next()
 }
 
-// The answer box is gone once the card is revealed, so grading keys are
-// read at the window and only while a revealed card is waiting.
 function onKey(e) {
   if (!revealed.value || !current.value) return
   const map = { 1: 'again', 2: 'hard', 3: 'good', 4: 'easy' }
@@ -88,8 +87,8 @@ function onKey(e) {
 }
 
 function wipe() {
-  if (!confirm('Forget all flashcard progress?')) return
-  deck.value = resetDeck()
+  if (!confirm('Forget all logo flashcard progress?')) return
+  deck.value = resetDeck(KEY)
   start()
 }
 
@@ -98,7 +97,7 @@ onMounted(() => {
   window.addEventListener('keydown', onKey)
 })
 onUnmounted(() => window.removeEventListener('keydown', onKey))
-watch(() => props.players, start)
+watch(() => props.teams, start)
 </script>
 
 <template>
@@ -114,30 +113,30 @@ watch(() => props.players, start)
 
       <template v-if="current">
         <p class="prompt">
-          What number does <b>{{ current.name }}</b> wear?
-          <span v-if="isNew" class="tag new">new · {{ current.nhlGames }} NHL GP</span>
+          Which team wears this logo?
+          <span v-if="isNew" class="tag new">new</span>
           <span v-else class="tag">review · every {{ fmtWait(card.interval) }}</span>
         </p>
         <div class="card" :class="{ revealed, correct, wrong: revealed && !correct }">
-          <button
-            class="face-btn" type="button" :title="`Open ${current.name}'s card`"
-            @click="emit('open', { player: current, hideNumber: !revealed })">
-            <img class="face" :src="base + 'portraits/' + current.portrait" :alt="current.name" />
-            <span class="face-hint">Player card</span>
-          </button>
+          <img class="face" :src="base + 'logos/' + current.logo" :alt="revealed ? current.name : 'Team logo'" />
           <div class="side">
-            <span class="who">{{ current.positionName }} · {{ current.country }}</span>
-            <form v-if="!revealed" class="answer" @submit.prevent="check">
-              <span class="hash">#</span>
+            <span class="who">
+              <template v-if="revealed">{{ current.division }} Division · {{ current.conference }} · est. {{ current.founded }}</template>
+              <template v-else>NHL club</template>
+            </span>
+            <form v-if="!revealed" class="answer" @submit.prevent="check()">
               <input
-                ref="inputEl" v-model="answer" type="number" inputmode="numeric" min="1" max="99"
-                placeholder="??" autocomplete="off" @keydown.enter.prevent.stop="check" />
+                ref="inputEl" v-model="answer" type="text" placeholder="Team name" autocomplete="off"
+                autocapitalize="off" spellcheck="false" @keydown.enter.prevent.stop="check()" />
               <button type="submit" class="show" :title="answer ? 'Check' : 'Show answer'">{{ answer ? 'Check' : 'Show' }}</button>
             </form>
-            <div v-else class="result">
-              <span class="big">#{{ current.number }}</span>
+            <ul v-if="suggestions.length" class="suggest">
+              <li v-for="t in suggestions" :key="t.abbrev"><button type="button" @click="check(t.name)">{{ t.name }}</button></li>
+            </ul>
+            <div v-if="revealed" class="result">
+              <span class="big">{{ current.name }}</span>
               <span class="verdict">
-                {{ correct ? 'Correct!' : answer ? `Not #${answer}` : 'Take a look' }}
+                {{ correct ? 'Correct!' : answer ? `Not "${answer}"` : 'Take a look' }}
               </span>
             </div>
           </div>
@@ -151,7 +150,7 @@ watch(() => props.players, start)
           </button>
         </div>
         <p class="hint">
-          <template v-if="!revealed">Type the number and press Enter — or just Show if you're blank.</template>
+          <template v-if="!revealed">Type the team and press Enter, pick a suggestion, or Show if you're blank.</template>
           <template v-else>Rate how hard it was: keys 1–4, or Enter for {{ correct ? 'Good' : 'Again' }}.</template>
           <span class="progress">{{ done }} done · {{ queue.length }} left</span>
         </p>
@@ -162,11 +161,11 @@ watch(() => props.players, start)
         <h3 v-else>Nothing due</h3>
         <p v-if="done">{{ sessionCorrect }} of {{ done }} right the first time. Cards come back as they fall due.</p>
         <p v-else-if="stats.unseen">
-          Today's {{ NEW_PER_DAY }} new cards are in. Come back tomorrow for more, or add extra now.
+          Today's {{ NEW_PER_DAY }} new logos are in. Come back tomorrow for more, or add extra now.
         </p>
-        <p v-else>Every number is scheduled. Check back when cards fall due.</p>
+        <p v-else>Every logo is scheduled. Check back when cards fall due.</p>
         <div class="finish-actions">
-          <button v-if="stats.unseen" class="more" @click="() => { queue = unseenPlayers(deck, players).slice(0, NEW_PER_DAY); finished = false; next() }">
+          <button v-if="stats.unseen" class="more" @click="() => { queue = unseenPlayers(deck, teams).slice(0, NEW_PER_DAY); finished = false; next() }">
             <Icon name="dice" :size="16" /> {{ NEW_PER_DAY }} more new cards
           </button>
           <button class="more" @click="start"><Icon name="stats" :size="16" /> Refresh queue</button>
@@ -252,21 +251,24 @@ watch(() => props.players, start)
 }
 .face {
   display: block;
-  width: 120px;
-  height: 120px;
+  flex: none;
+  width: 140px;
+  height: 140px;
+  padding: 10px;
   border-radius: 10px;
-  object-fit: cover;
-  object-position: top;
-  background: radial-gradient(circle at 50% 30%, #4b6390, #1b2540 75%);
+  object-fit: contain;
+  background: #fff;
+  border: 2px solid var(--tan);
 }
 .side { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .who { font-size: 13px; color: var(--brown); font-weight: 600; }
 .answer { display: flex; align-items: center; gap: 6px; }
 .hash { font-family: 'Lilita One', cursive; font-size: 34px; color: var(--brown); }
 .answer input {
-  width: 96px;
-  font-family: 'Lilita One', cursive;
-  font-size: 34px;
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 17px;
   padding: 4px 10px;
   border-radius: 10px;
   border: 2px solid var(--tan);
@@ -284,10 +286,21 @@ watch(() => props.players, start)
   background: var(--parchment-dark);
   color: var(--brown-dark);
 }
+.suggest { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.suggest button {
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--tan);
+  background: var(--parchment);
+  color: var(--brown-dark);
+}
+.suggest button:hover { background: var(--parchment-dark); }
 .result { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .big {
   font-family: 'Lilita One', cursive;
-  font-size: 46px;
+  font-size: 28px;
   line-height: 1;
   color: var(--habs-red);
   animation: pop .3s cubic-bezier(.2, .9, .3, 1.4) both;
@@ -354,6 +367,5 @@ watch(() => props.players, start)
 @media (max-width: 480px) {
   .card { flex-direction: column; text-align: center; }
   .side { align-items: center; }
-  .answer input { width: 84px; font-size: 30px; }
 }
 </style>

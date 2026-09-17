@@ -26,10 +26,14 @@ import Icon from './components/Icon.vue'
 import PlayerModal from './components/PlayerModal.vue'
 import SettingsModal from './components/SettingsModal.vue'
 import FlashcardsPanel from './components/FlashcardsPanel.vue'
+import LogoCardsPanel from './components/LogoCardsPanel.vue'
+import LogoQuiz from './components/LogoQuiz.vue'
+import { TEAMS } from './game/teams.js'
 
 const players = rawPlayers.map(decorate)
 
-const mode = ref('daily') // 'daily' | 'practice' | 'gallery' | 'cards'
+const mode = ref('daily') // 'daily' | 'practice' | 'logos' | 'gallery' | 'cards'
+const cardTab = ref('numbers') // 'numbers' | 'logos'
 const showHelp = ref(false)
 const showStats = ref(false)
 const showSettings = ref(false)
@@ -299,6 +303,10 @@ const base = import.meta.env.BASE_URL
           <span class="mode-ico">🎲</span>
           <span v-if="practice.won" class="mode-check">✔</span>
         </button>
+        <button class="mode-btn" :class="{ active: mode === 'logos' }" title="Logo quiz — name the NHL team"
+          @click="mode = 'logos'">
+          <span class="mode-ico">🛡️</span>
+        </button>
         <button class="mode-btn" :class="{ active: mode === 'gallery' }" title="Roster"
           @click="mode = 'gallery'">
           <span class="mode-ico">📋</span>
@@ -344,15 +352,32 @@ const base = import.meta.env.BASE_URL
           @open="galleryPick = $event" @toggle="toggleExcluded" @set-all="setAllExcluded" />
       </template>
 
-      <template v-else-if="mode === 'cards'">
+      <template v-else-if="mode === 'logos'">
         <section class="panel intro">
-          <h2>LEARN THE NUMBERS</h2>
+          <h2>NAME THAT TEAM!</h2>
           <p class="gallery-hint">
-            Flashcards with spaced repetition, Anki-style: a number you know comes back in days, then weeks;
-            one you miss comes back today. {{ pool.length }} players in the deck.
+            One of the {{ TEAMS.length }} NHL logos, no clues to start. Each miss unlocks a hint;
+            keep the streak alive.
           </p>
         </section>
-        <FlashcardsPanel :players="pool" @open="cardPick = $event" />
+        <LogoQuiz :teams="TEAMS" />
+      </template>
+
+      <template v-else-if="mode === 'cards'">
+        <section class="panel intro">
+          <h2>{{ cardTab === 'numbers' ? 'LEARN THE NUMBERS' : 'LEARN THE LOGOS' }}</h2>
+          <div class="tabs">
+            <button :class="{ on: cardTab === 'numbers' }" @click="cardTab = 'numbers'">#️⃣ Numbers</button>
+            <button :class="{ on: cardTab === 'logos' }" @click="cardTab = 'logos'">🛡️ Logos</button>
+          </div>
+          <p class="gallery-hint">
+            Flashcards with spaced repetition, Anki-style: a card you know comes back in days, then weeks;
+            one you miss comes back today.
+            {{ cardTab === 'numbers' ? `${pool.length} players` : `${TEAMS.length} NHL teams` }} in the deck.
+          </p>
+        </section>
+        <FlashcardsPanel v-if="cardTab === 'numbers'" :players="pool" @open="cardPick = $event" />
+        <LogoCardsPanel v-else :teams="TEAMS" />
       </template>
 
       <template v-else>
@@ -412,7 +437,7 @@ const base = import.meta.env.BASE_URL
         · also play <a href="https://hugobourretdesmarais.github.io/onepiecedle/">OnePieceDle</a>
         and <a href="https://hugobourretdesmarais.github.io/avatardle/">AvatarDle</a>
         <br />
-        Roster and headshots from <a href="https://www.nhl.com/canadiens/" target="_blank" rel="noreferrer">NHL.com</a>
+        Roster, headshots and team logos from <a href="https://www.nhl.com/canadiens/" target="_blank" rel="noreferrer">NHL.com</a>
         · Fan project, not affiliated with the Montréal Canadiens or the NHL
       </footer>
     </main>
@@ -562,6 +587,18 @@ button.tool:hover { background: rgba(36, 74, 124, .12); }
   font-size: 15px;
 }
 .reset-btn:hover { filter: brightness(.96); }
+
+.tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; }
+.tabs button {
+  font-weight: 700;
+  font-size: 14px;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 2px solid var(--tan);
+  background: var(--parchment);
+  color: var(--brown);
+}
+.tabs button.on { background: var(--brown-dark); border-color: var(--brown-dark); color: #fff; }
 
 .gallery-hint {
   margin: 0;

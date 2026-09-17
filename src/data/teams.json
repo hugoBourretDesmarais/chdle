@@ -1,0 +1,488 @@
+[
+ {
+  "abbrev": "BOS",
+  "name": "Boston Bruins",
+  "nameFr": "Bruins de Boston",
+  "common": "Bruins",
+  "place": "Boston",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1924,
+  "aliases": [
+   "B's"
+  ],
+  "logo": "BOS.svg",
+  "order": 0
+ },
+ {
+  "abbrev": "BUF",
+  "name": "Buffalo Sabres",
+  "nameFr": "Sabres de Buffalo",
+  "common": "Sabres",
+  "place": "Buffalo",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1970,
+  "aliases": [
+   "Sabres"
+  ],
+  "logo": "BUF.svg",
+  "order": 1
+ },
+ {
+  "abbrev": "DET",
+  "name": "Detroit Red Wings",
+  "nameFr": "Red Wings de Detroit",
+  "common": "Red Wings",
+  "place": "Detroit",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1926,
+  "aliases": [
+   "Wings"
+  ],
+  "logo": "DET.svg",
+  "order": 2
+ },
+ {
+  "abbrev": "FLA",
+  "name": "Florida Panthers",
+  "nameFr": "Panthers de la Floride",
+  "common": "Panthers",
+  "place": "Florida",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1993,
+  "aliases": [
+   "Cats"
+  ],
+  "logo": "FLA.svg",
+  "order": 3
+ },
+ {
+  "abbrev": "MTL",
+  "name": "Montréal Canadiens",
+  "nameFr": "Canadiens de Montréal",
+  "common": "Canadiens",
+  "place": "Montréal",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1909,
+  "aliases": [
+   "Habs",
+   "CH",
+   "Canadiens de Montréal"
+  ],
+  "logo": "MTL.svg",
+  "order": 4
+ },
+ {
+  "abbrev": "OTT",
+  "name": "Ottawa Senators",
+  "nameFr": "Sénateurs d'Ottawa",
+  "common": "Senators",
+  "place": "Ottawa",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1992,
+  "aliases": [
+   "Sens"
+  ],
+  "logo": "OTT.svg",
+  "order": 5
+ },
+ {
+  "abbrev": "TBL",
+  "name": "Tampa Bay Lightning",
+  "nameFr": "Lightning de Tampa Bay",
+  "common": "Lightning",
+  "place": "Tampa Bay",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1992,
+  "aliases": [
+   "Bolts"
+  ],
+  "logo": "TBL.svg",
+  "order": 6
+ },
+ {
+  "abbrev": "TOR",
+  "name": "Toronto Maple Leafs",
+  "nameFr": "Maple Leafs de Toronto",
+  "common": "Maple Leafs",
+  "place": "Toronto",
+  "conference": "Eastern",
+  "division": "Atlantic",
+  "founded": 1917,
+  "aliases": [
+   "Leafs",
+   "Buds"
+  ],
+  "logo": "TOR.svg",
+  "order": 7
+ },
+ {
+  "abbrev": "CAR",
+  "name": "Carolina Hurricanes",
+  "nameFr": "Hurricanes de la Caroline",
+  "common": "Hurricanes",
+  "place": "Carolina",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1979,
+  "aliases": [
+   "Canes"
+  ],
+  "logo": "CAR.svg",
+  "order": 8
+ },
+ {
+  "abbrev": "CBJ",
+  "name": "Columbus Blue Jackets",
+  "nameFr": "Blue Jackets de Columbus",
+  "common": "Blue Jackets",
+  "place": "Columbus",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 2000,
+  "aliases": [
+   "Jackets",
+   "CBJ"
+  ],
+  "logo": "CBJ.svg",
+  "order": 9
+ },
+ {
+  "abbrev": "NJD",
+  "name": "New Jersey Devils",
+  "nameFr": "Devils du New Jersey",
+  "common": "Devils",
+  "place": "New Jersey",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1974,
+  "aliases": [
+   "Devils"
+  ],
+  "logo": "NJD.svg",
+  "order": 10
+ },
+ {
+  "abbrev": "NYI",
+  "name": "New York Islanders",
+  "nameFr": "Islanders de New York",
+  "common": "Islanders",
+  "place": "NY Islanders",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1972,
+  "aliases": [
+   "Isles"
+  ],
+  "logo": "NYI.svg",
+  "order": 11
+ },
+ {
+  "abbrev": "NYR",
+  "name": "New York Rangers",
+  "nameFr": "Rangers de New York",
+  "common": "Rangers",
+  "place": "NY Rangers",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1926,
+  "aliases": [
+   "Blueshirts"
+  ],
+  "logo": "NYR.svg",
+  "order": 12
+ },
+ {
+  "abbrev": "PHI",
+  "name": "Philadelphia Flyers",
+  "nameFr": "Flyers de Philadelphie",
+  "common": "Flyers",
+  "place": "Philadelphia",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1967,
+  "aliases": [
+   "Broad Street Bullies"
+  ],
+  "logo": "PHI.svg",
+  "order": 13
+ },
+ {
+  "abbrev": "PIT",
+  "name": "Pittsburgh Penguins",
+  "nameFr": "Penguins de Pittsburgh",
+  "common": "Penguins",
+  "place": "Pittsburgh",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1967,
+  "aliases": [
+   "Pens"
+  ],
+  "logo": "PIT.svg",
+  "order": 14
+ },
+ {
+  "abbrev": "WSH",
+  "name": "Washington Capitals",
+  "nameFr": "Capitals de Washington",
+  "common": "Capitals",
+  "place": "Washington",
+  "conference": "Eastern",
+  "division": "Metropolitan",
+  "founded": 1974,
+  "aliases": [
+   "Caps"
+  ],
+  "logo": "WSH.svg",
+  "order": 15
+ },
+ {
+  "abbrev": "CHI",
+  "name": "Chicago Blackhawks",
+  "nameFr": "Blackhawks de Chicago",
+  "common": "Blackhawks",
+  "place": "Chicago",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 1926,
+  "aliases": [
+   "Hawks"
+  ],
+  "logo": "CHI.svg",
+  "order": 16
+ },
+ {
+  "abbrev": "COL",
+  "name": "Colorado Avalanche",
+  "nameFr": "Avalanche du Colorado",
+  "common": "Avalanche",
+  "place": "Colorado",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 1979,
+  "aliases": [
+   "Avs"
+  ],
+  "logo": "COL.svg",
+  "order": 17
+ },
+ {
+  "abbrev": "DAL",
+  "name": "Dallas Stars",
+  "nameFr": "Stars de Dallas",
+  "common": "Stars",
+  "place": "Dallas",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 1967,
+  "aliases": [
+   "Stars"
+  ],
+  "logo": "DAL.svg",
+  "order": 18
+ },
+ {
+  "abbrev": "MIN",
+  "name": "Minnesota Wild",
+  "nameFr": "Wild du Minnesota",
+  "common": "Wild",
+  "place": "Minnesota",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 2000,
+  "aliases": [
+   "Wild"
+  ],
+  "logo": "MIN.svg",
+  "order": 19
+ },
+ {
+  "abbrev": "NSH",
+  "name": "Nashville Predators",
+  "nameFr": "Predators de Nashville",
+  "common": "Predators",
+  "place": "Nashville",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 1998,
+  "aliases": [
+   "Preds"
+  ],
+  "logo": "NSH.svg",
+  "order": 20
+ },
+ {
+  "abbrev": "STL",
+  "name": "St. Louis Blues",
+  "nameFr": "Blues de St. Louis",
+  "common": "Blues",
+  "place": "St. Louis",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 1967,
+  "aliases": [
+   "Blues"
+  ],
+  "logo": "STL.svg",
+  "order": 21
+ },
+ {
+  "abbrev": "UTA",
+  "name": "Utah Mammoth",
+  "nameFr": "Mammoth de l'Utah",
+  "common": "Mammoth",
+  "place": "Utah",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 2024,
+  "aliases": [
+   "Utah",
+   "Mammoth"
+  ],
+  "logo": "UTA.svg",
+  "order": 22
+ },
+ {
+  "abbrev": "WPG",
+  "name": "Winnipeg Jets",
+  "nameFr": "Jets de Winnipeg",
+  "common": "Jets",
+  "place": "Winnipeg",
+  "conference": "Western",
+  "division": "Central",
+  "founded": 1999,
+  "aliases": [
+   "Jets"
+  ],
+  "logo": "WPG.svg",
+  "order": 23
+ },
+ {
+  "abbrev": "ANA",
+  "name": "Anaheim Ducks",
+  "nameFr": "Ducks d'Anaheim",
+  "common": "Ducks",
+  "place": "Anaheim",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 1993,
+  "aliases": [
+   "Ducks"
+  ],
+  "logo": "ANA.svg",
+  "order": 24
+ },
+ {
+  "abbrev": "CGY",
+  "name": "Calgary Flames",
+  "nameFr": "Flames de Calgary",
+  "common": "Flames",
+  "place": "Calgary",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 1972,
+  "aliases": [
+   "Flames"
+  ],
+  "logo": "CGY.svg",
+  "order": 25
+ },
+ {
+  "abbrev": "EDM",
+  "name": "Edmonton Oilers",
+  "nameFr": "Oilers d'Edmonton",
+  "common": "Oilers",
+  "place": "Edmonton",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 1979,
+  "aliases": [
+   "Oilers"
+  ],
+  "logo": "EDM.svg",
+  "order": 26
+ },
+ {
+  "abbrev": "LAK",
+  "name": "Los Angeles Kings",
+  "nameFr": "Kings de Los Angeles",
+  "common": "Kings",
+  "place": "Los Angeles",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 1967,
+  "aliases": [
+   "Kings"
+  ],
+  "logo": "LAK.svg",
+  "order": 27
+ },
+ {
+  "abbrev": "SJS",
+  "name": "San Jose Sharks",
+  "nameFr": "Sharks de San Jose",
+  "common": "Sharks",
+  "place": "San Jose",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 1991,
+  "aliases": [
+   "Sharks"
+  ],
+  "logo": "SJS.svg",
+  "order": 28
+ },
+ {
+  "abbrev": "SEA",
+  "name": "Seattle Kraken",
+  "nameFr": "Kraken de Seattle",
+  "common": "Kraken",
+  "place": "Seattle",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 2021,
+  "aliases": [
+   "Kraken"
+  ],
+  "logo": "SEA.svg",
+  "order": 29
+ },
+ {
+  "abbrev": "VAN",
+  "name": "Vancouver Canucks",
+  "nameFr": "Canucks de Vancouver",
+  "common": "Canucks",
+  "place": "Vancouver",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 1970,
+  "aliases": [
+   "Canucks"
+  ],
+  "logo": "VAN.svg",
+  "order": 30
+ },
+ {
+  "abbrev": "VGK",
+  "name": "Vegas Golden Knights",
+  "nameFr": "Golden Knights de Vegas",
+  "common": "Golden Knights",
+  "place": "Vegas",
+  "conference": "Western",
+  "division": "Pacific",
+  "founded": 2017,
+  "aliases": [
+   "Knights",
+   "Vegas"
+  ],
+  "logo": "VGK.svg",
+  "order": 31
+ }
+]

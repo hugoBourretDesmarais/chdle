@@ -4,6 +4,8 @@ import { computed, ref } from 'vue'
 const props = defineProps({
   characters: { type: Array, required: true },
   guessed: { type: Set, required: true },
+  imgDir: { type: String, default: 'portraits/' },
+  placeholder: { type: String, default: 'Type a player name...' },
 })
 const emit = defineEmits(['guess'])
 
@@ -64,7 +66,7 @@ function onKey(e) {
   <div class="guess-input">
     <div class="input-row">
       <input
-        ref="inputEl" v-model="query" type="text" placeholder="Type a player name..."
+        ref="inputEl" v-model="query" type="text" :placeholder="placeholder"
         autocomplete="off" autocapitalize="off" spellcheck="false"
         @keydown="onKey" @input="selected = 0" />
       <button
@@ -75,7 +77,7 @@ function onKey(e) {
       <li
         v-for="(c, i) in matches" :key="c.name" :class="{ sel: i === selected }"
         @mousedown.prevent="pick(c)" @mousemove="selected = i">
-        <img :src="base + 'portraits/' + c.portrait" :alt="c.name" loading="lazy" />
+        <img :src="base + imgDir + c.portrait" :alt="c.name" loading="lazy" />
         <span>{{ c.name }}</span>
       </li>
     </ul>

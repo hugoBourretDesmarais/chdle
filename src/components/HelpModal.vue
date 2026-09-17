@@ -39,7 +39,8 @@ const emit = defineEmits(['close'])
         <tbody>
           <tr><td>🏒 Classic</td><td>One player per day, shared by everyone. Resets at your local midnight.</td></tr>
           <tr><td>🎲 Practice</td><td>Unlimited random players — hit <b>New player</b> any time to reroll.</td></tr>
-          <tr><td>🃏 Flashcards</td><td>Learn the sweater numbers with spaced repetition. Type the number, then rate the card Again, Hard, Good or Easy — like Anki, the wait before it returns grows with every Good. Eight new players a day, the most experienced first; progress is saved on this device.</td></tr>
+          <tr><td>🛡️ Logo quiz</td><td>Name the NHL team from its logo, all 32 clubs. Every miss unlocks a hint (conference, division, founding year, first letter). Solving keeps your streak going; showing the answer ends it.</td></tr>
+          <tr><td>🃏 Flashcards</td><td>Spaced repetition, Anki-style, with two decks: <b>Numbers</b> (type a Canadien's sweater number) and <b>Logos</b> (name the team). Rate each card Again, Hard, Good or Easy — the wait before it returns grows with every Good. Eight new cards a day per deck, the most experienced players and the Atlantic Division first; progress is saved on this device.</td></tr>
           <tr><td>📋 Roster</td><td>Browse the whole 2026-27 camp roster and search by name, position, country or draft. Tap a card for full details, or untick it to keep it out of practice mode.</td></tr>
         </tbody>
       </table>
@@ -62,7 +63,7 @@ const emit = defineEmits(['close'])
         instead of the full camp roster with its prospects.
       </p>
 
-      <p class="note">Roster, bios and headshots come from NHL.com and reflect the 2026-27 training camp roster. Fan project.</p>
+      <p class="note">Roster, bios, headshots and team logos come from NHL.com and reflect the 2026-27 training camp roster. Fan project.</p>
     </div>
   </div>
 </template>
