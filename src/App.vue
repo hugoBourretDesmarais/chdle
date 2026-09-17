@@ -379,7 +379,7 @@ const base = import.meta.env.BASE_URL
           v-if="game.won && !revealing" :answer="game.answer" :tries="game.guesses.length" :mode="mode"
           :countdown="countdown" :guesses="game.guesses" :daily-number="daily.number"
           @practice="mode = 'practice'"
-          @replay="newPractice" />
+          @replay="newPractice" @open="galleryPick = $event" />
 
         <GuessInput
           v-if="!game.won" :characters="pool" :guessed="guessedNames"
@@ -398,7 +398,7 @@ const base = import.meta.env.BASE_URL
             </div>
             <GuessRow
             v-for="g in game.guesses" :key="g.char.name" :guess="g" :base="base"
-            @revealed="finishReveal" />
+            @revealed="finishReveal" @open="galleryPick = $event" />
           </div>
         </section>
 

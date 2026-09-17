@@ -10,7 +10,7 @@ const props = defineProps({
   guesses: { type: Array, required: true },
   dailyNumber: { type: Number, required: true },
 })
-const emit = defineEmits(['practice', 'replay'])
+const emit = defineEmits(['practice', 'replay', 'open'])
 
 const base = import.meta.env.BASE_URL
 const copied = ref(false)
@@ -36,7 +36,10 @@ async function share() {
 <template>
   <section class="panel win">
     <h2>GOAL! 🚨</h2>
-    <img class="win-portrait" :src="base + 'portraits/' + answer.portrait" :alt="answer.name" />
+    <button class="win-open" type="button" :title="`Open ${answer.name}'s card`" @click="emit('open', answer)">
+      <img class="win-portrait" :src="base + 'portraits/' + answer.portrait" :alt="answer.name" />
+      <span class="win-hint">Player card</span>
+    </button>
     <p class="win-name">{{ answer.name }}</p>
     <p class="win-codename">{{ answer.number != null ? `#${answer.number} · ` : '' }}{{ answer.positionName }}</p>
     <p class="win-tries">
@@ -78,7 +81,34 @@ h2 {
   margin: 0 0 10px;
   font-size: 30px;
 }
+.win-open {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 10px;
+  overflow: hidden;
+  line-height: 0;
+}
+.win-open:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, .25); }
+.win-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .7));
+}
 .win-portrait {
+  display: block;
   animation: portrait-pop .45s cubic-bezier(.2, .9, .3, 1.5) both .05s;
   width: 110px;
   height: 110px;

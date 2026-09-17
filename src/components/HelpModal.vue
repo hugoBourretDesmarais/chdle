@@ -30,6 +30,8 @@ const emit = defineEmits(['close'])
         </tbody>
       </table>
 
+      <p>Tap a guessed player's portrait — or the winner's — to open their full card.</p>
+
       <h3>Clues</h3>
       <p>Stuck? After 5 guesses you unlock the <b>Birthplace</b> clue, after 8 the <b>Draft</b> clue (year, round, overall pick and club) and after 10 the <b>Last Season</b> clue (the player's most recent stat line).</p>
       <h3>Modes</h3>

@@ -6,7 +6,7 @@ const props = defineProps({
   guess: { type: Object, required: true },
   base: { type: String, required: true },
 })
-const emit = defineEmits(['revealed'])
+const emit = defineEmits(['revealed', 'open'])
 
 const order = COLUMNS.map(c => c.key)
 
@@ -34,10 +34,12 @@ function fitStyle(text) {
       class="tile" :class="cellClass(key)" :style="{ '--d': i * 0.28 + 's' }"
       @animationend="i === order.length - 1 && emit('revealed')">
       <template v-if="key === 'portrait'">
-        <img
-          class="portrait" :src="base + 'portraits/' + guess.char.portrait"
-          :alt="guess.char.name" :title="guess.char.name" />
-        <span class="name">{{ guess.char.name }}</span>
+        <button class="open" type="button" :title="`Open ${guess.char.name}'s card`" @click="emit('open', guess.char)">
+          <img
+            class="portrait" :src="base + 'portraits/' + guess.char.portrait"
+            :alt="guess.char.name" />
+          <span class="name">{{ guess.char.name }}</span>
+        </button>
       </template>
       <template v-else>
         <span v-if="guess.cells[key].arrow === 'up'" class="arrow" aria-hidden="true">▲</span>
@@ -91,7 +93,21 @@ function fitStyle(text) {
   .tile.animate { animation: none; }
 }
 
+.open {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.open:hover .portrait { transform: scale(1.06); }
+.open:focus-visible { outline: 3px solid #ff98a4; outline-offset: -3px; }
 .portrait {
+  display: block;
+  transition: transform .15s;
   width: 100%;
   height: 100%;
   object-fit: cover;
