@@ -105,7 +105,7 @@ onMounted(() => { load(); next() })
 
       <template v-else-if="answer">
         <GuessInput
-          :characters="teams" :guessed="guessed" img-dir="logos/" placeholder="Type a team name..."
+          :characters="teams" :guessed="guessed" :show-images="false" placeholder="Type a team name..."
           @guess="guess" />
         <ul v-if="hints.length" class="hints">
           <li v-for="h in hints" :key="h">💡 {{ h }}</li>

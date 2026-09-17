@@ -5,6 +5,7 @@ const props = defineProps({
   characters: { type: Array, required: true },
   guessed: { type: Set, required: true },
   imgDir: { type: String, default: 'portraits/' },
+  showImages: { type: Boolean, default: true },
   placeholder: { type: String, default: 'Type a player name...' },
 })
 const emit = defineEmits(['guess'])
@@ -77,7 +78,7 @@ function onKey(e) {
       <li
         v-for="(c, i) in matches" :key="c.name" :class="{ sel: i === selected }"
         @mousedown.prevent="pick(c)" @mousemove="selected = i">
-        <img :src="base + imgDir + c.portrait" :alt="c.name" loading="lazy" />
+        <img v-if="showImages" :src="base + imgDir + c.portrait" :alt="c.name" loading="lazy" />
         <span>{{ c.name }}</span>
       </li>
     </ul>
