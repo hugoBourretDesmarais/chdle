@@ -107,8 +107,10 @@ def main():
             if name in EXCLUDE:
                 continue
             landing = get(f"https://api-web.nhle.com/v1/player/{pid}/landing", f"player-{pid}.json")
-            # A fresh signing can sit on the roster without a number for a while.
-            number = p.get("sweaterNumber") or landing.get("sweaterNumber")
+            # A fresh signing can sit on the roster without a number for a while;
+            # only a player with a contract on file gets the player-page number,
+            # so camp invitees carrying last year's digits stay out.
+            number = p.get("sweaterNumber") or (landing.get("sweaterNumber") if name in SALARIES else None)
             if number is None:
                 continue
             portrait = f"{slug(name)}.png"
