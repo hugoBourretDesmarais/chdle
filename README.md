@@ -34,7 +34,7 @@ Type a player name and submit. Each guess reveals a row of tiles:
 | Age | age today, with arrows |
 | Height | feet and inches, with arrows |
 | Draft | round and drafting club (`R1` over `MTL · 2022`), arrows by round; undrafted players only match each other |
-| Cap hit | 2026-27 salary-cap hit with arrows (`$7.88M`); an unsigned RFA shows `RFA` and only matches another one |
+| Cap hit | 2026-27 salary-cap hit with arrows (`$7.88M`); an unsigned RFA would show `RFA` and only match another one |
 | With CH since | first regular season with the Canadiens; newcomers and prospects count as 2026-27 |
 
 Clues unlock as you guess: **Birthplace** after 5 tries, **Draft** (year, round, overall pick and
@@ -64,7 +64,7 @@ player. Over the wire the scope travels under the original `arcLimit`/`arc_limit
 ## Data
 
 The Canadiens' 2026-27 roster as the NHL API lists it at training camp, minus camp invitees without a
-sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (28 players at the time of
+sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (29 players at the time of
 writing). Roster moves are picked up by rerunning the fetch:
 
 ```bash

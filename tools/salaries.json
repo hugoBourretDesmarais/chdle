@@ -1,32 +1,123 @@
 {
-  "_source": "2026-27 cap hits (AAV) from HighDanger and CapWages, checked 2026-09-12. null = unsigned RFA. expiry = last season of the deal (start year).",
-  "Nick Suzuki": [7875000, 2029],
-  "Cole Caufield": [7850000, 2030],
-  "Juraj Slafkovský": [7600000, 2032],
-  "Phillip Danault": [5500000, 2026],
-  "Josh Anderson": [5500000, 2026],
-  "Kirby Dach": [3600000, 2026],
-  "Alex Newhook": [2900000, 2027],
-  "Jake Evans": [2850000, 2028],
-  "Alexandre Texier": [2500000, 2027],
-  "Oliver Kapanen": [941667, 2027],
-  "Ivan Demidov": [940833, 2026],
-  "Zachary Bolduc": [null, null],
-  "Owen Beck": [853333, 2026],
-  "Lucas Condotta": [850000, 2026],
-  "Jared Davidson": [850000, 2026],
-  "Florian Xhekaj": [941667, 2026],
-  "Tyler Thorpe": [968333, 2027],
-  "Noah Dobson": [9500000, 2032],
-  "Lane Hutson": [8850000, 2033],
-  "Mike Matheson": [6000000, 2030],
-  "Kaiden Guhle": [5550000, 2030],
-  "Alexandre Carrier": [3750000, 2026],
-  "Jayden Struble": [1412500, 2028],
-  "Arber Xhekaj": [null, null],
-  "Adam Engstrom": [896667, 2026],
-  "David Reinbacher": [909167, 2027],
-  "Samuel Montembeault": [3150000, 2026],
-  "Jakub Dobes": [965000, 2026],
-  "Jacob Fowler": [945833, 2027]
+  "_source": "2026-27 cap hits (AAV) from HighDanger, CapWages and NHL.com signings, checked 2026-09-17. null = unsigned RFA. expiry = last season of the deal (start year).",
+  "Nick Suzuki": [
+    7875000,
+    2029
+  ],
+  "Cole Caufield": [
+    7850000,
+    2030
+  ],
+  "Juraj Slafkovský": [
+    7600000,
+    2032
+  ],
+  "Phillip Danault": [
+    5500000,
+    2026
+  ],
+  "Josh Anderson": [
+    5500000,
+    2026
+  ],
+  "Kirby Dach": [
+    3600000,
+    2026
+  ],
+  "Alex Newhook": [
+    2900000,
+    2027
+  ],
+  "Jake Evans": [
+    2850000,
+    2028
+  ],
+  "Alexandre Texier": [
+    2500000,
+    2027
+  ],
+  "Oliver Kapanen": [
+    941667,
+    2027
+  ],
+  "Ivan Demidov": [
+    940833,
+    2026
+  ],
+  "Zachary Bolduc": [
+    4200000,
+    2029
+  ],
+  "Owen Beck": [
+    853333,
+    2026
+  ],
+  "Lucas Condotta": [
+    850000,
+    2026
+  ],
+  "Jared Davidson": [
+    850000,
+    2026
+  ],
+  "Florian Xhekaj": [
+    941667,
+    2026
+  ],
+  "Tyler Thorpe": [
+    968333,
+    2027
+  ],
+  "Noah Dobson": [
+    9500000,
+    2032
+  ],
+  "Lane Hutson": [
+    8850000,
+    2033
+  ],
+  "Mike Matheson": [
+    6000000,
+    2030
+  ],
+  "Kaiden Guhle": [
+    5550000,
+    2030
+  ],
+  "Alexandre Carrier": [
+    3750000,
+    2026
+  ],
+  "Jayden Struble": [
+    1412500,
+    2028
+  ],
+  "Arber Xhekaj": [
+    1500000,
+    2026
+  ],
+  "Adam Engstrom": [
+    896667,
+    2026
+  ],
+  "David Reinbacher": [
+    909167,
+    2027
+  ],
+  "Samuel Montembeault": [
+    3150000,
+    2026
+  ],
+  "Jakub Dobes": [
+    965000,
+    2026
+  ],
+  "Jacob Fowler": [
+    945833,
+    2027
+  ],
+  "Chris Kreider": [
+    2150000,
+    2026
+  ]
 }

@@ -104,9 +104,13 @@ def main():
             pid = p["id"]
             first, last = p["firstName"]["default"], p["lastName"]["default"]
             name = f"{first} {last}"
-            if p.get("sweaterNumber") is None or name in EXCLUDE:
+            if name in EXCLUDE:
                 continue
             landing = get(f"https://api-web.nhle.com/v1/player/{pid}/landing", f"player-{pid}.json")
+            # A fresh signing can sit on the roster without a number for a while.
+            number = p.get("sweaterNumber") or landing.get("sweaterNumber")
+            if number is None:
+                continue
             portrait = f"{slug(name)}.png"
             dest = PORTRAITS / portrait
             if not dest.exists():
@@ -126,7 +130,7 @@ def main():
                 "id": pid,
                 "name": name,
                 "aliases": [],
-                "number": p.get("sweaterNumber"),
+                "number": number,
                 "position": {"L": "LW", "R": "RW"}.get(pos, pos),
                 "positionName": POSITIONS[pos],
                 "shoots": p["shootsCatches"],
