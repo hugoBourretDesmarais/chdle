@@ -100,6 +100,13 @@ onMounted(() => { load(); next() })
           {{ answer.division }} Division · {{ answer.conference }} Conference · est. {{ answer.founded }}
           <template v-if="solved"> · solved in {{ guesses.length + 1 }} {{ guesses.length ? 'guesses' : 'guess' }}</template>
         </p>
+        <a class="star" :href="`https://www.nhl.com/player/${answer.star.id}`" target="_blank" rel="noreferrer">
+          <img :src="`https://assets.nhle.com/mugs/nhl/20252026/${answer.abbrev}/${answer.star.id}.png`" :alt="answer.star.name" />
+          <span>
+            <b>⭐ {{ answer.star.name }}</b>
+            <small>{{ answer.star.position }} · {{ answer.star.points }} pts ({{ answer.star.goals }}G {{ answer.star.assists }}A) in {{ answer.star.season }}</small>
+          </span>
+        </a>
         <button class="next" @click="next"><Icon name="dice" :size="18" /> Next logo</button>
       </template>
 
@@ -160,6 +167,29 @@ onMounted(() => { load(); next() })
 @keyframes drop { from { transform: scale(.7); opacity: 0; } to { transform: none; opacity: 1; } }
 
 .reveal { font-family: 'Lilita One', cursive; color: var(--habs-red); font-size: 26px; margin: 0; text-align: center; }
+.star {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--brown-dark);
+  background: var(--parchment-dark);
+  border: 1px solid var(--tan);
+  border-radius: 12px;
+  padding: 6px 14px 6px 6px;
+}
+.star:hover { filter: brightness(.97); }
+.star img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  background: radial-gradient(circle at 50% 30%, #4b6390, #1b2540 75%);
+}
+.star span { display: flex; flex-direction: column; line-height: 1.25; }
+.star b { font-size: 15px; }
+.star small { font-size: 12px; color: var(--brown); }
 .meta { margin: -6px 0 0; font-size: 13.5px; color: var(--brown); text-align: center; }
 .next, .giveup {
   display: inline-flex;

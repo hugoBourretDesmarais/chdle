@@ -139,6 +139,12 @@ watch(() => props.teams, start)
                 {{ correct ? 'Correct!' : answer ? `Not "${answer}"` : 'Take a look' }}
               </span>
             </div>
+            <a
+              v-if="revealed" class="star" :href="`https://www.nhl.com/player/${current.star.id}`"
+              target="_blank" rel="noreferrer">
+              <img :src="`https://assets.nhle.com/mugs/nhl/20252026/${current.abbrev}/${current.star.id}.png`" :alt="current.star.name" />
+              <span><b>⭐ {{ current.star.name }}</b><small>{{ current.star.points }} pts in {{ current.star.season }}</small></span>
+            </a>
           </div>
         </div>
 
@@ -297,6 +303,29 @@ watch(() => props.teams, start)
   color: var(--brown-dark);
 }
 .suggest button:hover { background: var(--parchment-dark); }
+.star {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--brown-dark);
+  background: var(--parchment-dark);
+  border: 1px solid var(--tan);
+  border-radius: 10px;
+  padding: 4px 12px 4px 4px;
+}
+.star img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  background: radial-gradient(circle at 50% 30%, #4b6390, #1b2540 75%);
+}
+.star span { display: flex; flex-direction: column; line-height: 1.2; }
+.star b { font-size: 13.5px; }
+.star small { font-size: 11px; color: var(--brown); }
 .result { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .big {
   font-family: 'Lilita One', cursive;
