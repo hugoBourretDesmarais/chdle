@@ -25,6 +25,8 @@ UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
 # Camp invitees without a sweater number are dropped, plus anyone listed here.
 EXCLUDE = {"Alex Belzile", "Filip Mesar", "Owen Protz", "Tyler Thorpe"}
+# The feed only has birth country; NHL.com shows nationality separately.
+NATIONALITY = {"Oliver Kapanen": "FIN"}
 
 POSITIONS = {"C": "Centre", "L": "Left wing", "R": "Right wing", "D": "Defence", "G": "Goalie"}
 COUNTRIES = {
@@ -139,7 +141,7 @@ def main():
                 "position": {"L": "LW", "R": "RW"}.get(pos, pos),
                 "positionName": POSITIONS[pos],
                 "shoots": p["shootsCatches"],
-                "country": COUNTRIES.get(p["birthCountry"], p["birthCountry"]),
+                "country": COUNTRIES[NATIONALITY.get(name, p["birthCountry"])],
                 "birthplace": place(p),
                 "birthDate": p["birthDate"],
                 "heightIn": p["heightInInches"],

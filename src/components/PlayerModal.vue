@@ -63,6 +63,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
           <tr><td>{{ p.position === 'G' ? 'Catches' : 'Shoots' }}</td><td>{{ p.shoots === 'L' ? 'Left' : 'Right' }}</td></tr>
           <tr><td>Number</td><td>{{ hideNumber ? '🙈 hidden until you answer' : p.number != null ? `#${p.number}` : 'Not assigned' }}</td></tr>
           <tr><td>Born</td><td>{{ p.birthDate }} ({{ p.age }}) · {{ p.birthplace }}</td></tr>
+          <tr><td>Nationality</td><td>{{ p.country }}</td></tr>
           <tr><td>Height</td><td>{{ formatHeight(p.heightIn) }} · {{ formatHeightMetric(p.heightIn) }}</td></tr>
           <tr><td>Weight</td><td>{{ formatWeight(p.weightLb) }}</td></tr>
           <tr><td>Draft</td><td>{{ draftSentence(p.draft) }}</td></tr>

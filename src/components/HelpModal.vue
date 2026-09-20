@@ -20,7 +20,7 @@ const emit = defineEmits(['close'])
         <tbody>
           <tr><td>Position</td><td>C, LW, RW, D or G. Yellow when both are forwards but not the same one</td></tr>
           <tr><td>Shoots</td><td>L or R — the catching hand for a goalie</td></tr>
-          <tr><td>Country</td><td>Country of birth</td></tr>
+          <tr><td>Country</td><td>Nationality, as listed on NHL.com</td></tr>
           <tr><td>Number</td><td>Sweater number at camp. Prospects without one show —</td></tr>
           <tr><td>Age</td><td>Age today</td></tr>
           <tr><td>Height</td><td>In feet and inches; the arrow points to taller or shorter</td></tr>
