@@ -25,8 +25,6 @@ UA = {"User-Agent": "CHdleFanProject/1.0 (personal, low-volume)"}
 
 # Camp invitees without a sweater number are dropped, plus anyone listed here.
 EXCLUDE = {"Alex Belzile", "Filip Mesar", "Owen Protz", "Tyler Thorpe"}
-# The feed only has birth country; NHL.com shows nationality separately.
-NATIONALITY = {"Oliver Kapanen": "FIN"}
 
 POSITIONS = {"C": "Centre", "L": "Left wing", "R": "Right wing", "D": "Defence", "G": "Goalie"}
 COUNTRIES = {
@@ -97,9 +95,22 @@ def last_season(landing, pos):
     return out
 
 
+# The landing feed only has birth country; nationality lives in the stats bios.
+def nationalities(ids):
+    joined = ",".join(map(str, ids))
+    out = {}
+    for kind in ("skater", "goalie"):
+        d = get(f"https://api.nhle.com/stats/rest/en/{kind}/bios?limit=-1&cayenneExp=playerId%20in%20({joined})",
+                f"bios-{kind}.json")
+        for r in d["data"]:
+            out[r["playerId"]] = r["nationalityCode"]
+    return out
+
+
 def main():
     roster = get(f"https://api-web.nhle.com/v1/roster/{TEAM}/{SEASON}", f"roster-{SEASON}.json")
     PORTRAITS.mkdir(parents=True, exist_ok=True)
+    nat = nationalities([p["id"] for g in ("forwards", "defensemen", "goalies") for p in roster[g]])
     players = []
     for group in ("forwards", "defensemen", "goalies"):
         for p in roster[group]:
@@ -141,7 +152,7 @@ def main():
                 "position": {"L": "LW", "R": "RW"}.get(pos, pos),
                 "positionName": POSITIONS[pos],
                 "shoots": p["shootsCatches"],
-                "country": COUNTRIES[NATIONALITY.get(name, p["birthCountry"])],
+                "country": COUNTRIES[nat.get(pid, p["birthCountry"])],
                 "birthplace": place(p),
                 "birthDate": p["birthDate"],
                 "heightIn": p["heightInInches"],
