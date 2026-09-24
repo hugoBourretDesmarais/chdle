@@ -52,20 +52,24 @@ function fresh() {
 }
 
 // Cards that go by before this one comes back, for each rating.
-export function preview(card = fresh()) {
-  const g = card.gap
-  if (g === 0) return { again: 2, hard: 4, good: 8, easy: 16 }
-  return {
-    again: 2,
-    hard: Math.max(3, Math.round(g * 1.2)),
-    good: Math.max(g + 2, Math.round(g * card.ease)),
-    easy: Math.max(g + 4, Math.round(g * card.ease * 1.3)),
-  }
+// A gap past a few trips through the deck only reorders cards, so it is capped.
+export function preview(card = fresh(), size = Infinity) {
+  const g = Math.min(card.gap, size * 3)
+  const raw = g === 0
+    ? { again: 2, hard: 4, good: 8, easy: 16 }
+    : {
+      again: 2,
+      hard: Math.max(3, Math.round(g * 1.2)),
+      good: Math.max(g + 2, Math.round(g * card.ease)),
+      easy: Math.max(g + 4, Math.round(g * card.ease * 1.3)),
+    }
+  for (const k in raw) raw[k] = Math.min(raw[k], size * 3)
+  return raw
 }
 
-export function rate(deck, name, rating, wasCorrect) {
+export function rate(deck, name, rating, wasCorrect, size = Infinity) {
   const c = { ...(deck.cards[name] ?? fresh()) }
-  const gap = preview(c)[rating]
+  const gap = preview(c, size)[rating]
   c.seen += 1
   if (wasCorrect) c.correct += 1
   if (rating === 'again') {
@@ -104,6 +108,27 @@ export function nextCard(deck, items, avoid = null) {
   const unseen = unseenPlayers(deck, items)
   if (unseen.length) return unseen.find(p => p.name !== avoid) ?? unseen[0]
   return top ?? items.find(p => p.name === avoid) ?? null
+}
+
+// How many other cards really show before this one returns with the given gap,
+// replaying nextCard's order without the ratings those cards will get.
+export function cardsUntil(deck, items, name, gap) {
+  const back = deck.step + 1 + gap
+  const dues = items.filter(p => p.name !== name && deck.cards[p.name]).map(p => deck.cards[p.name].due)
+  dues.sort((a, b) => a - b)
+  let unseen = items.filter(p => p.name !== name && !deck.cards[p.name]).length
+  let shown = 0
+  const others = dues.length + unseen
+  for (let t = deck.step + 1; ; t++) {
+    const head = dues.length ? dues[0] : Infinity
+    if (head <= t && head < back) dues.shift()
+    else if (back <= t && (shown || !others)) return shown
+    else if (unseen) unseen -= 1
+    else if (head < back) dues.shift()
+    else if (shown || !others) return shown
+    else dues.shift()
+    shown += 1
+  }
 }
 
 export function deckStats(deck, items) {

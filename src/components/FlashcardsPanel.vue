@@ -1,7 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import {
-  RATINGS, deckStats, fmtGap, loadDeck, nextCard, preview, rate, resetDeck, saveDeck,
+  RATINGS, cardsUntil, deckStats, fmtGap, loadDeck, nextCard, preview, rate, resetDeck, saveDeck,
 } from '../game/anki.js'
 
 const props = defineProps({
@@ -67,7 +67,14 @@ function truth(key) {
 const stats = computed(() => deckStats(deck.value, props.players))
 const isNew = computed(() => current.value && !deck.value.cards[current.value.name])
 const card = computed(() => (current.value ? deck.value.cards[current.value.name] : null))
-const waits = computed(() => preview(card.value ?? undefined))
+const waits = computed(() => {
+  if (!current.value) return {}
+  const gaps = preview(card.value ?? undefined, props.players.length)
+  const out = {}
+  for (const k in gaps) out[k] = cardsUntil(deck.value, props.players, current.value.name, gaps[k])
+  return out
+})
+const others = computed(() => props.players.length - 1)
 
 function start() {
   done.value = 0
@@ -96,7 +103,7 @@ function check() {
 
 function grade(rating) {
   if (!revealed.value) return
-  rate(deck.value, current.value.name, rating, correct.value)
+  rate(deck.value, current.value.name, rating, correct.value, props.players.length)
   saveDeck(deck.value)
   deck.value = { ...deck.value }
   done.value += 1
@@ -156,7 +163,7 @@ watch(() => props.players, start)
         <p class="prompt">
           What number does <b>{{ current.name }}</b> wear?
           <span v-if="isNew" class="tag new">new · {{ current.nhlGames }} NHL GP</span>
-          <span v-else class="tag">{{ card.gap ? `review · every ${fmtGap(card.gap)}` : 'relearning' }}</span>
+          <span v-else class="tag">{{ card.gap ? `review · seen ${card.seen}×` : 'relearning' }}</span>
         </p>
         <div class="card" :class="{ revealed, correct, wrong: revealed && !correct }">
           <button
@@ -210,7 +217,7 @@ watch(() => props.players, start)
           <button
             v-for="r in RATINGS" :key="r.key" class="grade" :class="r.key"
             @click="grade(r.key)">
-            <b>{{ r.label }}</b><span>{{ r.key === 'again' ? 'soon' : 'in ' + fmtGap(waits[r.key]) }}</span>
+            <b>{{ r.label }}</b><span>{{ waits[r.key] >= others ? 'after all others' : 'in ' + fmtGap(waits[r.key]) }}</span>
           </button>
         </div>
         <p class="hint">

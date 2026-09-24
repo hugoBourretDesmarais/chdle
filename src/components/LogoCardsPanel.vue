@@ -1,7 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import {
-  DECKS, RATINGS, deckStats, fmtGap, loadDeck, nextCard, preview, rate, resetDeck, saveDeck,
+  DECKS, RATINGS, cardsUntil, deckStats, fmtGap, loadDeck, nextCard, preview, rate, resetDeck, saveDeck,
 } from '../game/anki.js'
 import { isTeam, suggestTeams } from '../game/teams.js'
 
@@ -23,7 +23,14 @@ const inputEl = ref(null)
 const stats = computed(() => deckStats(deck.value, props.teams))
 const isNew = computed(() => current.value && !deck.value.cards[current.value.name])
 const card = computed(() => (current.value ? deck.value.cards[current.value.name] : null))
-const waits = computed(() => preview(card.value ?? undefined))
+const waits = computed(() => {
+  if (!current.value) return {}
+  const gaps = preview(card.value ?? undefined, props.teams.length)
+  const out = {}
+  for (const k in gaps) out[k] = cardsUntil(deck.value, props.teams, current.value.name, gaps[k])
+  return out
+})
+const others = computed(() => props.teams.length - 1)
 const suggestions = computed(() => (revealed.value ? [] : suggestTeams(answer.value, props.teams, new Set(), 5)))
 
 
@@ -49,7 +56,7 @@ function check(text = answer.value) {
 
 function grade(rating) {
   if (!revealed.value) return
-  rate(deck.value, current.value.name, rating, correct.value)
+  rate(deck.value, current.value.name, rating, correct.value, props.teams.length)
   saveDeck(deck.value, KEY)
   deck.value = { ...deck.value }
   done.value += 1
@@ -99,7 +106,7 @@ watch(() => props.teams, start)
         <p class="prompt">
           Which team wears this logo?
           <span v-if="isNew" class="tag new">new</span>
-          <span v-else class="tag">{{ card.gap ? `review · every ${fmtGap(card.gap)}` : 'relearning' }}</span>
+          <span v-else class="tag">{{ card.gap ? `review · seen ${card.seen}×` : 'relearning' }}</span>
         </p>
         <div class="card" :class="{ revealed, correct, wrong: revealed && !correct }">
           <img class="face" :src="base + 'logos/' + current.logo" :alt="revealed ? current.name : 'Team logo'" />
@@ -136,7 +143,7 @@ watch(() => props.teams, start)
           <button
             v-for="r in RATINGS" :key="r.key" class="grade" :class="r.key"
             @click="grade(r.key)">
-            <b>{{ r.label }}</b><span>{{ r.key === 'again' ? 'soon' : 'in ' + fmtGap(waits[r.key]) }}</span>
+            <b>{{ r.label }}</b><span>{{ waits[r.key] >= others ? 'after all others' : 'in ' + fmtGap(waits[r.key]) }}</span>
           </button>
         </div>
         <p class="hint">
