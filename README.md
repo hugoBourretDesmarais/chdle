@@ -60,7 +60,7 @@ an ease factor and a gap: **Again** brings it back after 2 cards, **Hard** stret
 **Good** multiplies it by the ease, **Easy** by the ease ×1.3. A new card starts at 4/8/16 cards for
 Hard/Good/Easy. The next card is the most overdue one; when none is due a new card joins (most NHL
 games first, Atlantic Division first for logos), and once everything is introduced the soonest card
-comes up. Gaps are capped at three trips through the deck, and the buttons show how many cards will really pass before the card returns (`cardsUntil` replays the pick order), not the raw gap. A card is *mature* once its gap exceeds the deck size. Number cards can also quiz **Position**, **Shoots** and **Country** (toggles, all on by default, saved under `chdle:anki:fields`); a quizzed field is hidden from the card and the card only counts as right when every answer is. Progress lives in `localStorage`
+comes up. Gaps are capped at three trips through the deck, and the buttons show how many cards will really pass before the card returns (`cardsUntil` replays the pick order), not the raw gap. A card is *mature* once its gap exceeds the deck size. Number cards quiz any mix of **Number**, **Position**, **Shoots** and **Country** (toggles, all on by default, at least one stays on, saved under `chdle:anki:ask`); a quizzed field is hidden from the card and the card only counts as right when every answer is. Progress lives in `localStorage`
 under `chdle:anki` and `chdle:anki:logos`; older day-based decks migrate at five cards per day.
 
 ### Roster scope

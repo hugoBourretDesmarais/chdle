@@ -19,12 +19,15 @@ const done = ref(0)
 const sessionCorrect = ref(0)
 const inputEl = ref(null)
 
-const FIELDS_KEY = 'chdle:anki:fields'
-const EXTRA = [
+const FIELDS_KEY = 'chdle:anki:ask'
+const OLD_FIELDS_KEY = 'chdle:anki:fields'
+const FIELDS = [
+  { key: 'number', label: 'Number' },
   { key: 'position', label: 'Position' },
   { key: 'shoots', label: 'Shoots' },
   { key: 'country', label: 'Country' },
 ]
+const EXTRA = FIELDS.slice(1)
 const POSITIONS = ['C', 'LW', 'RW', 'D', 'G']
 const HANDS = ['L', 'R']
 const asked = ref(loadFields())
@@ -35,16 +38,20 @@ const verdicts = ref({})
 function loadFields() {
   try {
     const f = JSON.parse(localStorage.getItem(FIELDS_KEY))
-    if (Array.isArray(f)) return new Set(f)
+    if (Array.isArray(f) && f.length) return new Set(f)
+    const old = JSON.parse(localStorage.getItem(OLD_FIELDS_KEY))
+    if (Array.isArray(old)) return new Set(['number', ...old])
   } catch { /* default below */ }
-  return new Set(EXTRA.map(f => f.key))
+  return new Set(FIELDS.map(f => f.key))
 }
 
 function toggleField(key) {
   if (revealed.value) return
   const next = new Set(asked.value)
-  if (next.has(key)) next.delete(key)
-  else next.add(key)
+  if (next.has(key)) {
+    if (next.size === 1) return
+    next.delete(key)
+  } else next.add(key)
   asked.value = next
   localStorage.setItem(FIELDS_KEY, JSON.stringify([...next]))
 }
@@ -53,6 +60,7 @@ const clues = computed(() => {
   const c = current.value
   if (!c) return ''
   const out = []
+  if (!asked.value.has('number') && !revealed.value) out.push(`#${c.number}`)
   if (!asked.value.has('position')) out.push(c.positionName)
   if (!asked.value.has('shoots')) out.push(`${c.position === 'G' ? 'Catches' : 'Shoots'} ${c.shoots}`)
   if (!asked.value.has('country')) out.push(c.country)
@@ -94,7 +102,8 @@ function next() {
 function check() {
   if (revealed.value || !current.value) return
   const n = Number(answer.value)
-  const v = { number: answer.value !== '' && Number.isInteger(n) && n === current.value.number }
+  const v = {}
+  if (asked.value.has('number')) v.number = answer.value !== '' && Number.isInteger(n) && n === current.value.number
   for (const f of EXTRA) if (asked.value.has(f.key)) v[f.key] = picks.value[f.key] === truth(f.key)
   verdicts.value = v
   correct.value = Object.values(v).every(Boolean)
@@ -114,7 +123,14 @@ function grade(rating) {
 // The answer box is gone once the card is revealed, so grading keys are
 // read at the window and only while a revealed card is waiting.
 function onKey(e) {
-  if (!revealed.value || !current.value) return
+  if (!current.value) return
+  if (!revealed.value) {
+    if (e.key === 'Enter' && !asked.value.has('number') && e.target.tagName !== 'SELECT') {
+      e.preventDefault()
+      check()
+    }
+    return
+  }
   const map = { 1: 'again', 2: 'hard', 3: 'good', 4: 'easy' }
   if (map[e.key]) {
     e.preventDefault()
@@ -152,16 +168,18 @@ watch(() => props.players, start)
       </div>
 
       <div class="fields">
-        <span class="fields-label">Also ask</span>
+        <span class="fields-label">Ask</span>
         <button
-          v-for="f in EXTRA" :key="f.key" type="button" class="field-toggle"
-          :class="{ on: asked.has(f.key) }" :disabled="revealed" :aria-pressed="asked.has(f.key)"
+          v-for="f in FIELDS" :key="f.key" type="button" class="field-toggle"
+          :class="{ on: asked.has(f.key) }" :disabled="revealed || (asked.size === 1 && asked.has(f.key))"
+          :aria-pressed="asked.has(f.key)"
           @click="toggleField(f.key)">{{ asked.has(f.key) ? '✔ ' : '' }}{{ f.label }}</button>
       </div>
 
       <template v-if="current">
         <p class="prompt">
-          What number does <b>{{ current.name }}</b> wear?
+          <template v-if="asked.has('number')">What number does <b>{{ current.name }}</b> wear?</template>
+          <template v-else>What do you know about <b>{{ current.name }}</b>?</template>
           <span v-if="isNew" class="tag new">new · {{ current.nhlGames }} NHL GP</span>
           <span v-else class="tag">{{ card.gap ? `review · seen ${card.seen}×` : 'relearning' }}</span>
         </p>
@@ -191,20 +209,21 @@ watch(() => props.players, start)
                 <option v-for="x in countries" :key="x" :value="x">{{ x }}</option>
               </select>
             </div>
-            <form v-if="!revealed" class="answer" @submit.prevent="check">
+            <form v-if="!revealed && asked.has('number')" class="answer" @submit.prevent="check">
               <span class="hash">#</span>
               <input
                 ref="inputEl" v-model="answer" type="number" inputmode="numeric" min="1" max="99"
                 placeholder="??" autocomplete="off" @keydown.enter.prevent.stop="check" />
               <button type="submit" class="show" :title="answer ? 'Check' : 'Show answer'">{{ answer ? 'Check' : 'Show' }}</button>
             </form>
-            <div v-else class="result">
+            <button v-else-if="!revealed" type="button" class="show check-only" @click="check">Check</button>
+            <div v-if="revealed" class="result">
               <span class="big">#{{ current.number }}</span>
               <span class="verdict">
-                {{ correct ? 'Correct!' : verdicts.number ? '' : answer ? `Not #${answer}` : 'Take a look' }}
+                {{ correct ? 'Correct!' : !('number' in verdicts) || verdicts.number ? '' : answer ? `Not #${answer}` : 'Take a look' }}
               </span>
             </div>
-            <ul v-if="revealed && Object.keys(verdicts).length > 1" class="checks">
+            <ul v-if="revealed && EXTRA.some(f => f.key in verdicts)" class="checks">
               <li v-for="f in EXTRA.filter(f => f.key in verdicts)" :key="f.key" :class="verdicts[f.key] ? 'ok' : 'ko'">
                 {{ verdicts[f.key] ? '✔' : '✘' }} {{ f.label }}: <b>{{ f.key === 'position' ? current.positionName : truth(f.key) }}</b>
                 <template v-if="!verdicts[f.key] && picks[f.key]"> (not {{ picks[f.key] }})</template>
@@ -221,7 +240,7 @@ watch(() => props.players, start)
           </button>
         </div>
         <p class="hint">
-          <template v-if="!revealed">Pick the answers, type the number and press Enter — or just Show if you're blank.</template>
+          <template v-if="!revealed">{{ asked.has('number') ? 'Pick the answers, type the number and press Enter — or just Show if you\'re blank.' : 'Pick the answers, then Check or press Enter.' }}</template>
           <template v-else>Rate how hard it was: keys 1–4, or Enter for {{ correct ? 'Good' : 'Again' }}.</template>
           <span class="progress">{{ done }} this session · {{ sessionCorrect }} right</span>
         </p>
@@ -329,6 +348,7 @@ watch(() => props.players, start)
 }
 .field-toggle.on { background: var(--brown-dark); border-color: var(--brown-dark); color: #fff; }
 .field-toggle:disabled { opacity: .6; cursor: default; }
+.check-only { align-self: flex-start; }
 .extras { display: flex; flex-direction: column; gap: 6px; }
 .pickrow { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
 .pick-label { font-size: 12px; font-weight: 700; color: var(--brown); margin-right: 2px; }
