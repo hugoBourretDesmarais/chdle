@@ -19,6 +19,51 @@ const done = ref(0)
 const sessionCorrect = ref(0)
 const inputEl = ref(null)
 
+const FIELDS_KEY = 'chdle:anki:fields'
+const EXTRA = [
+  { key: 'position', label: 'Position' },
+  { key: 'shoots', label: 'Shoots' },
+  { key: 'country', label: 'Country' },
+]
+const POSITIONS = ['C', 'LW', 'RW', 'D', 'G']
+const HANDS = ['L', 'R']
+const asked = ref(loadFields())
+const picks = ref({ position: null, shoots: null, country: null })
+const countries = computed(() => [...new Set(props.players.map(p => p.country))].sort())
+const verdicts = ref({})
+
+function loadFields() {
+  try {
+    const f = JSON.parse(localStorage.getItem(FIELDS_KEY))
+    if (Array.isArray(f)) return new Set(f)
+  } catch { /* default below */ }
+  return new Set(EXTRA.map(f => f.key))
+}
+
+function toggleField(key) {
+  if (revealed.value) return
+  const next = new Set(asked.value)
+  if (next.has(key)) next.delete(key)
+  else next.add(key)
+  asked.value = next
+  localStorage.setItem(FIELDS_KEY, JSON.stringify([...next]))
+}
+
+const clues = computed(() => {
+  const c = current.value
+  if (!c) return ''
+  const out = []
+  if (!asked.value.has('position')) out.push(c.positionName)
+  if (!asked.value.has('shoots')) out.push(`${c.position === 'G' ? 'Catches' : 'Shoots'} ${c.shoots}`)
+  if (!asked.value.has('country')) out.push(c.country)
+  return out.join(' · ')
+})
+
+function truth(key) {
+  const c = current.value
+  return key === 'number' ? c.number : c[key]
+}
+
 const stats = computed(() => deckStats(deck.value, props.players))
 const isNew = computed(() => current.value && !deck.value.cards[current.value.name])
 const card = computed(() => (current.value ? deck.value.cards[current.value.name] : null))
@@ -33,6 +78,8 @@ function start() {
 function next() {
   revealed.value = false
   answer.value = ''
+  picks.value = { position: null, shoots: null, country: null }
+  verdicts.value = {}
   current.value = nextCard(deck.value, props.players, current.value?.name)
   if (current.value) nextTick(() => inputEl.value?.focus())
 }
@@ -40,7 +87,10 @@ function next() {
 function check() {
   if (revealed.value || !current.value) return
   const n = Number(answer.value)
-  correct.value = Number.isInteger(n) && n === current.value.number
+  const v = { number: answer.value !== '' && Number.isInteger(n) && n === current.value.number }
+  for (const f of EXTRA) if (asked.value.has(f.key)) v[f.key] = picks.value[f.key] === truth(f.key)
+  verdicts.value = v
+  correct.value = Object.values(v).every(Boolean)
   revealed.value = true
 }
 
@@ -94,6 +144,14 @@ watch(() => props.players, start)
         <div class="stat"><b>{{ stats.retention ?? '—' }}<template v-if="stats.retention != null">%</template></b><span>Recall</span></div>
       </div>
 
+      <div class="fields">
+        <span class="fields-label">Also ask</span>
+        <button
+          v-for="f in EXTRA" :key="f.key" type="button" class="field-toggle"
+          :class="{ on: asked.has(f.key) }" :disabled="revealed" :aria-pressed="asked.has(f.key)"
+          @click="toggleField(f.key)">{{ asked.has(f.key) ? '✔ ' : '' }}{{ f.label }}</button>
+      </div>
+
       <template v-if="current">
         <p class="prompt">
           What number does <b>{{ current.name }}</b> wear?
@@ -108,7 +166,24 @@ watch(() => props.players, start)
             <span class="face-hint">Player card</span>
           </button>
           <div class="side">
-            <span class="who">{{ current.positionName }} · {{ current.country }}</span>
+            <span v-if="clues" class="who">{{ clues }}</span>
+            <div v-if="!revealed" class="extras">
+              <div v-if="asked.has('position')" class="pickrow">
+                <button
+                  v-for="x in POSITIONS" :key="x" type="button" class="pick"
+                  :class="{ sel: picks.position === x }" @click="picks.position = x">{{ x }}</button>
+              </div>
+              <div v-if="asked.has('shoots')" class="pickrow">
+                <span class="pick-label">Hand</span>
+                <button
+                  v-for="x in HANDS" :key="x" type="button" class="pick"
+                  :class="{ sel: picks.shoots === x }" @click="picks.shoots = x">{{ x }}</button>
+              </div>
+              <select v-if="asked.has('country')" v-model="picks.country" class="country">
+                <option :value="null" disabled>Country…</option>
+                <option v-for="x in countries" :key="x" :value="x">{{ x }}</option>
+              </select>
+            </div>
             <form v-if="!revealed" class="answer" @submit.prevent="check">
               <span class="hash">#</span>
               <input
@@ -119,9 +194,15 @@ watch(() => props.players, start)
             <div v-else class="result">
               <span class="big">#{{ current.number }}</span>
               <span class="verdict">
-                {{ correct ? 'Correct!' : answer ? `Not #${answer}` : 'Take a look' }}
+                {{ correct ? 'Correct!' : verdicts.number ? '' : answer ? `Not #${answer}` : 'Take a look' }}
               </span>
             </div>
+            <ul v-if="revealed && Object.keys(verdicts).length > 1" class="checks">
+              <li v-for="f in EXTRA.filter(f => f.key in verdicts)" :key="f.key" :class="verdicts[f.key] ? 'ok' : 'ko'">
+                {{ verdicts[f.key] ? '✔' : '✘' }} {{ f.label }}: <b>{{ f.key === 'position' ? current.positionName : truth(f.key) }}</b>
+                <template v-if="!verdicts[f.key] && picks[f.key]"> (not {{ picks[f.key] }})</template>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -133,7 +214,7 @@ watch(() => props.players, start)
           </button>
         </div>
         <p class="hint">
-          <template v-if="!revealed">Type the number and press Enter — or just Show if you're blank.</template>
+          <template v-if="!revealed">Pick the answers, type the number and press Enter — or just Show if you're blank.</template>
           <template v-else>Rate how hard it was: keys 1–4, or Enter for {{ correct ? 'Good' : 'Again' }}.</template>
           <span class="progress">{{ done }} this session · {{ sessionCorrect }} right</span>
         </p>
@@ -228,6 +309,47 @@ watch(() => props.players, start)
 }
 .side { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .who { font-size: 13px; color: var(--brown); font-weight: 600; }
+.fields { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.fields-label { font-size: 11px; text-transform: uppercase; letter-spacing: .3px; color: var(--brown); font-weight: 700; }
+.field-toggle {
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 14px;
+  border: 1.5px solid var(--tan);
+  background: var(--parchment);
+  color: var(--brown);
+}
+.field-toggle.on { background: var(--brown-dark); border-color: var(--brown-dark); color: #fff; }
+.field-toggle:disabled { opacity: .6; cursor: default; }
+.extras { display: flex; flex-direction: column; gap: 6px; }
+.pickrow { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+.pick-label { font-size: 12px; font-weight: 700; color: var(--brown); margin-right: 2px; }
+.pick {
+  min-width: 38px;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 2px solid var(--tan);
+  background: var(--parchment);
+  color: var(--brown-dark);
+}
+.pick.sel { background: var(--habs-red); border-color: var(--habs-red); color: #fff; }
+.country {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 2px solid var(--tan);
+  background: var(--parchment);
+  color: var(--ink);
+}
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; }
+.checks .ok { color: var(--green); }
+.checks .ko { color: var(--red); }
+.checks b { color: var(--brown-dark); }
 .answer { display: flex; align-items: center; gap: 6px; }
 .hash { font-family: 'Lilita One', cursive; font-size: 34px; color: var(--brown); }
 .answer input {
