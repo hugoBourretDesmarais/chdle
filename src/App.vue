@@ -371,8 +371,8 @@ const base = import.meta.env.BASE_URL
             <button :class="{ on: cardTab === 'logos' }" @click="cardTab = 'logos'">🛡️ Logos</button>
           </div>
           <p class="gallery-hint">
-            Flashcards with spaced repetition, Anki-style: a card you know comes back in days, then weeks;
-            one you miss comes back today.
+            Flashcards with spaced repetition, Anki-style: a card you miss comes right back;
+            one you know waits longer and longer before it returns.
             {{ cardTab === 'numbers' ? `${pool.length} players` : `${TEAMS.length} NHL teams` }} in the deck.
           </p>
         </section>

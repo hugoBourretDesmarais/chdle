@@ -1,9 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import Icon from './Icon.vue'
 import {
-  DECKS, NEW_PER_DAY, RATINGS, buildQueue, deckStats, loadDeck, markIntroduced, preview, rate, resetDeck,
-  saveDeck, unseenPlayers,
+  DECKS, RATINGS, deckStats, fmtGap, loadDeck, nextCard, preview, rate, resetDeck, saveDeck,
 } from '../game/anki.js'
 import { isTeam, suggestTeams } from '../game/teams.js'
 
@@ -14,7 +12,6 @@ const props = defineProps({
 const KEY = DECKS.logos
 const base = import.meta.env.BASE_URL
 const deck = ref(loadDeck(KEY))
-const queue = ref([])
 const current = ref(null)
 const answer = ref('')
 const revealed = ref(false)
@@ -22,7 +19,6 @@ const correct = ref(false)
 const done = ref(0)
 const sessionCorrect = ref(0)
 const inputEl = ref(null)
-const finished = ref(false)
 
 const stats = computed(() => deckStats(deck.value, props.teams))
 const isNew = computed(() => current.value && !deck.value.cards[current.value.name])
@@ -30,31 +26,18 @@ const card = computed(() => (current.value ? deck.value.cards[current.value.name
 const waits = computed(() => preview(card.value ?? undefined))
 const suggestions = computed(() => (revealed.value ? [] : suggestTeams(answer.value, props.teams, new Set(), 5)))
 
-function fmtWait(days) {
-  if (days === 0) return 'now'
-  if (days < 30) return `${days}d`
-  if (days < 365) return `${Math.round(days / 30)}mo`
-  return `${(days / 365).toFixed(1)}y`
-}
 
 function start() {
-  const q = buildQueue(deck.value, props.teams)
-  queue.value = [...q.due, ...q.fresh]
   done.value = 0
   sessionCorrect.value = 0
-  finished.value = false
   next()
 }
 
 function next() {
   revealed.value = false
   answer.value = ''
-  current.value = queue.value.shift() ?? null
-  if (!current.value) {
-    finished.value = true
-    return
-  }
-  nextTick(() => inputEl.value?.focus())
+  current.value = nextCard(deck.value, props.teams, current.value?.name)
+  if (current.value) nextTick(() => inputEl.value?.focus())
 }
 
 function check(text = answer.value) {
@@ -62,7 +45,6 @@ function check(text = answer.value) {
   answer.value = text
   correct.value = isTeam(text, current.value, props.teams)
   revealed.value = true
-  if (isNew.value) markIntroduced(deck.value)
 }
 
 function grade(rating) {
@@ -72,14 +54,16 @@ function grade(rating) {
   deck.value = { ...deck.value }
   done.value += 1
   if (correct.value) sessionCorrect.value += 1
-  if (rating === 'again') queue.value.splice(Math.min(3, queue.value.length), 0, current.value)
   next()
 }
 
 function onKey(e) {
   if (!revealed.value || !current.value) return
   const map = { 1: 'again', 2: 'hard', 3: 'good', 4: 'easy' }
-  if (map[e.key]) grade(map[e.key])
+  if (map[e.key]) {
+    e.preventDefault()
+    grade(map[e.key])
+  }
   else if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault()
     grade(correct.value ? 'good' : 'again')
@@ -105,7 +89,7 @@ watch(() => props.teams, start)
     <div class="panel deck">
       <div class="deck-stats">
         <div class="stat"><b>{{ stats.due }}</b><span>Due</span></div>
-        <div class="stat"><b>{{ Math.max(0, Math.min(stats.unseen, NEW_PER_DAY - stats.today.introduced)) }}</b><span>New today</span></div>
+        <div class="stat"><b>{{ stats.unseen }}</b><span>New left</span></div>
         <div class="stat"><b>{{ stats.learned }}/{{ stats.total }}</b><span>Learned</span></div>
         <div class="stat"><b>{{ stats.mature }}</b><span>Mature</span></div>
         <div class="stat"><b>{{ stats.retention ?? '—' }}<template v-if="stats.retention != null">%</template></b><span>Recall</span></div>
@@ -115,7 +99,7 @@ watch(() => props.teams, start)
         <p class="prompt">
           Which team wears this logo?
           <span v-if="isNew" class="tag new">new</span>
-          <span v-else class="tag">review · every {{ fmtWait(card.interval) }}</span>
+          <span v-else class="tag">{{ card.gap ? `review · every ${fmtGap(card.gap)}` : 'relearning' }}</span>
         </p>
         <div class="card" :class="{ revealed, correct, wrong: revealed && !correct }">
           <img class="face" :src="base + 'logos/' + current.logo" :alt="revealed ? current.name : 'Team logo'" />
@@ -152,31 +136,16 @@ watch(() => props.teams, start)
           <button
             v-for="r in RATINGS" :key="r.key" class="grade" :class="r.key"
             @click="grade(r.key)">
-            <b>{{ r.label }}</b><span>{{ fmtWait(waits[r.key]) }}</span>
+            <b>{{ r.label }}</b><span>{{ r.key === 'again' ? 'soon' : 'in ' + fmtGap(waits[r.key]) }}</span>
           </button>
         </div>
         <p class="hint">
           <template v-if="!revealed">Type the team and press Enter, pick a suggestion, or Show if you're blank.</template>
           <template v-else>Rate how hard it was: keys 1–4, or Enter for {{ correct ? 'Good' : 'Again' }}.</template>
-          <span class="progress">{{ done }} done · {{ queue.length }} left</span>
+          <span class="progress">{{ done }} this session · {{ sessionCorrect }} right</span>
         </p>
       </template>
 
-      <div v-else class="finished">
-        <h3 v-if="done">Session complete 🎉</h3>
-        <h3 v-else>Nothing due</h3>
-        <p v-if="done">{{ sessionCorrect }} of {{ done }} right the first time. Cards come back as they fall due.</p>
-        <p v-else-if="stats.unseen">
-          Today's {{ NEW_PER_DAY }} new logos are in. Come back tomorrow for more, or add extra now.
-        </p>
-        <p v-else>Every logo is scheduled. Check back when cards fall due.</p>
-        <div class="finish-actions">
-          <button v-if="stats.unseen" class="more" @click="() => { queue = unseenPlayers(deck, teams).slice(0, NEW_PER_DAY); finished = false; next() }">
-            <Icon name="dice" :size="16" /> {{ NEW_PER_DAY }} more new cards
-          </button>
-          <button class="more" @click="start"><Icon name="stats" :size="16" /> Refresh queue</button>
-        </div>
-      </div>
 
       <button class="wipe" @click="wipe">Reset progress</button>
     </div>
@@ -368,21 +337,6 @@ watch(() => props.teams, start)
 }
 .progress { font-weight: 700; }
 
-.finished { text-align: center; padding: 8px 0; }
-.finished h3 { font-family: 'Lilita One', cursive; color: var(--brown-dark); margin: 0 0 6px; }
-.finished p { margin: 0 0 12px; font-size: 14px; color: var(--brown); }
-.finish-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.more {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 700;
-  padding: 9px 14px;
-  border-radius: 8px;
-  border: 2px solid var(--tan);
-  background: var(--parchment-dark);
-  color: var(--brown-dark);
-}
 .wipe {
   align-self: flex-end;
   background: none;

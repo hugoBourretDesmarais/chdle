@@ -54,12 +54,14 @@ NHL standings feed into `src/data/teams.json` and saves the SVG logos to `public
 
 ### Flashcards
 
-Two decks — **Numbers** (sweater numbers) and **Logos** (team names) — with spaced repetition scheduled like Anki's SM-2 (`src/game/anki.js`): each
-card keeps an ease factor and an interval; **Again** resets it to today and re-queues it in the
-session, **Hard** stretches the interval ×1.2 and lowers the ease, **Good** multiplies by the ease,
-**Easy** by the ease ×1.3 and raises it. New cards start at 1 day (Good) or 4 days (Easy), and eight
-new players enter the deck per day, most NHL games played first, so the regulars come before the call-ups. The deck, the daily log and the recall rate live in
-`localStorage` under `chdle:anki` (numbers) and `chdle:anki:logos`; the roster scope also narrows the numbers deck. New logo cards arrive by division, Atlantic first.
+Two decks — **Numbers** (sweater numbers) and **Logos** (team names) — with spaced repetition
+measured in cards rather than days (`src/game/anki.js`), so a session never runs dry. Each card keeps
+an ease factor and a gap: **Again** brings it back after 2 cards, **Hard** stretches the gap ×1.2,
+**Good** multiplies it by the ease, **Easy** by the ease ×1.3. A new card starts at 4/8/16 cards for
+Hard/Good/Easy. The next card is the most overdue one; when none is due a new card joins (most NHL
+games first, Atlantic Division first for logos), and once everything is introduced the soonest card
+comes up. A card is *mature* once its gap exceeds the deck size. Progress lives in `localStorage`
+under `chdle:anki` and `chdle:anki:logos`; older day-based decks migrate at five cards per day.
 
 ### Roster scope
 

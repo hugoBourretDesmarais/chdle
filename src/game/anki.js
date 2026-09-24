@@ -1,10 +1,8 @@
-// Spaced repetition scheduled the way Anki's SM-2 does: each card carries an
-// ease factor and an interval in days, and a rating stretches or resets them.
-// One deck per subject in localStorage: chdle:anki (numbers), chdle:anki:logos.
-import { localDateString } from './state.js'
+// Spaced repetition measured in cards instead of days: every rating sets how
+// many other cards go by before this one returns, so a session never runs dry.
+// Ease grows with Good/Easy and shrinks with Again/Hard, like Anki's SM-2.
 
 export const DECKS = { numbers: 'chdle:anki', logos: 'chdle:anki:logos' }
-export const NEW_PER_DAY = 8
 const MIN_EASE = 1.3
 
 export const RATINGS = [
@@ -14,12 +12,29 @@ export const RATINGS = [
   { key: 'easy', label: 'Easy' },
 ]
 
+function empty() {
+  return { v: 2, step: 0, cards: {} }
+}
+
+// v1 decks counted days; a day becomes five cards so earlier progress carries over.
+function migrate(d) {
+  const out = empty()
+  for (const [name, c] of Object.entries(d.cards ?? {})) {
+    const gap = Math.round((c.interval ?? 0) * 5)
+    out.cards[name] = {
+      ease: c.ease ?? 2.5, gap, due: gap, seen: c.seen ?? 0, correct: c.correct ?? 0, lapses: c.lapses ?? 0,
+    }
+  }
+  return out
+}
+
 export function loadDeck(key = DECKS.numbers) {
   try {
     const d = JSON.parse(localStorage.getItem(key))
-    return d && d.cards ? d : { cards: {}, log: {} }
+    if (!d?.cards) return empty()
+    return d.v === 2 ? d : migrate(d)
   } catch {
-    return { cards: {}, log: {} }
+    return empty()
   }
 }
 
@@ -27,114 +42,92 @@ export function saveDeck(deck, key = DECKS.numbers) {
   localStorage.setItem(key, JSON.stringify(deck))
 }
 
-function addDays(dateStr, n) {
-  const d = new Date(dateStr + 'T00:00:00')
-  d.setDate(d.getDate() + n)
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
+export function resetDeck(key = DECKS.numbers) {
+  localStorage.removeItem(key)
+  return empty()
 }
 
-// A card that has never been reviewed. Interval 0 keeps it in today's queue.
 function fresh() {
-  return { ease: 2.5, interval: 0, due: null, reps: 0, lapses: 0, seen: 0, correct: 0 }
+  return { ease: 2.5, gap: 0, due: 0, seen: 0, correct: 0, lapses: 0 }
 }
 
-// What each rating would do to the card, so the buttons can show the wait.
+// Cards that go by before this one comes back, for each rating.
 export function preview(card = fresh()) {
-  const c = card
-  const learning = c.interval === 0
+  const g = card.gap
+  if (g === 0) return { again: 2, hard: 4, good: 8, easy: 16 }
   return {
-    again: 0,
-    hard: learning ? 1 : Math.max(1, Math.round(c.interval * 1.2)),
-    good: learning ? 1 : Math.max(c.interval + 1, Math.round(c.interval * c.ease)),
-    easy: learning ? 4 : Math.max(c.interval + 2, Math.round(c.interval * c.ease * 1.3)),
+    again: 2,
+    hard: Math.max(3, Math.round(g * 1.2)),
+    good: Math.max(g + 2, Math.round(g * card.ease)),
+    easy: Math.max(g + 4, Math.round(g * card.ease * 1.3)),
   }
 }
 
-export function rate(deck, name, rating, wasCorrect, today = localDateString()) {
+export function rate(deck, name, rating, wasCorrect) {
   const c = { ...(deck.cards[name] ?? fresh()) }
-  const days = preview(c)[rating]
+  const gap = preview(c)[rating]
   c.seen += 1
   if (wasCorrect) c.correct += 1
   if (rating === 'again') {
     c.ease = Math.max(MIN_EASE, c.ease - 0.2)
-    if (c.interval > 0) c.lapses += 1
-    c.interval = 0
-    c.due = today
-  } else {
-    if (rating === 'hard') c.ease = Math.max(MIN_EASE, c.ease - 0.15)
-    if (rating === 'easy') c.ease += 0.15
-    c.interval = days
-    c.due = addDays(today, days)
-    c.reps += 1
+    if (c.gap > 0) c.lapses += 1
+  } else if (rating === 'hard') {
+    c.ease = Math.max(MIN_EASE, c.ease - 0.15)
+  } else if (rating === 'easy') {
+    c.ease += 0.15
   }
+  deck.step += 1
+  c.gap = rating === 'again' ? 0 : gap
+  c.due = deck.step + gap
   deck.cards[name] = c
-  const log = deck.log[today] ?? { reviews: 0, correct: 0, introduced: 0 }
-  log.reviews += 1
-  if (wasCorrect) log.correct += 1
-  deck.log[today] = log
   return c
 }
 
-export function markIntroduced(deck, today = localDateString()) {
-  const log = deck.log[today] ?? { reviews: 0, correct: 0, introduced: 0 }
-  log.introduced += 1
-  deck.log[today] = log
-}
-
-export function introducedToday(deck, today = localDateString()) {
-  return deck.log[today]?.introduced ?? 0
-}
-
-// New cards arrive most-experienced first: the regulars you see every game are
-// the numbers worth knowing before the call-ups. Cards without games (teams)
-// fall back to their preset order.
-export function unseenPlayers(deck, players) {
-  return players
+// New cards arrive most-experienced first; teams fall back to their preset order.
+export function unseenPlayers(deck, items) {
+  return items
     .filter(p => !deck.cards[p.name])
     .sort((a, b) => (b.nhlGames ?? 0) - (a.nhlGames ?? 0)
       || (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))
 }
 
-// Due cards first, oldest due at the front; then new cards up to the daily cap.
-export function buildQueue(deck, players, today = localDateString()) {
-  const due = []
-  for (const p of players) {
+// The most overdue card if one is ready, else a new card, else whichever
+// comes back soonest. Never the same card twice in a row when there's a choice.
+export function nextCard(deck, items, avoid = null) {
+  let top = null
+  for (const p of items) {
     const c = deck.cards[p.name]
-    if (c && c.due <= today) due.push([c.due, p])
+    if (!c || p.name === avoid) continue
+    if (!top || c.due < deck.cards[top.name].due) top = p
   }
-  const fresh = unseenPlayers(deck, players)
-  due.sort((a, b) => a[0].localeCompare(b[0]))
-  const room = Math.max(0, NEW_PER_DAY - introducedToday(deck, today))
-  return { due: due.map(x => x[1]), fresh: fresh.slice(0, room), unseen: fresh.length }
+  if (top && deck.cards[top.name].due <= deck.step) return top
+  const unseen = unseenPlayers(deck, items)
+  if (unseen.length) return unseen.find(p => p.name !== avoid) ?? unseen[0]
+  return top ?? items.find(p => p.name === avoid) ?? null
 }
 
-export function deckStats(deck, players, today = localDateString()) {
+export function deckStats(deck, items) {
   let learned = 0
   let mature = 0
   let due = 0
   let seen = 0
   let correct = 0
-  for (const p of players) {
+  for (const p of items) {
     const c = deck.cards[p.name]
     if (!c) continue
     learned += 1
-    if (c.interval >= 21) mature += 1
-    if (c.due <= today) due += 1
+    if (c.gap >= items.length) mature += 1
+    if (c.due <= deck.step) due += 1
     seen += c.seen
     correct += c.correct
   }
   return {
-    learned, mature, due, total: players.length,
-    unseen: players.length - learned,
+    learned, mature, due, total: items.length,
+    unseen: items.length - learned,
     retention: seen ? Math.round((correct / seen) * 100) : null,
-    today: deck.log[today] ?? { reviews: 0, correct: 0, introduced: 0 },
   }
 }
 
-export function resetDeck(key = DECKS.numbers) {
-  localStorage.removeItem(key)
-  return { cards: {}, log: {} }
+export function fmtGap(n) {
+  return n === 1 ? '1 card' : `${n} cards`
 }
