@@ -20,18 +20,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2025,
-  "nhlGames": 15,
+  "nhlGames": 30,
   "capHit": 896667,
   "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
    "gp": 15,
-   "goals": 0,
+   "goals": 1,
    "assists": 1,
-   "points": 1
+   "points": 2
   },
   "portrait": "adam-engstrom.png"
  },
@@ -56,20 +56,20 @@
    "teamName": "Colorado"
   },
   "sinceSeason": 2023,
-  "nhlGames": 338,
+  "nhlGames": 360,
   "capHit": 2900000,
   "contractEnd": 2027,
   "otherTeams": [
    "Avalanche"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 42,
-   "goals": 13,
-   "assists": 12,
-   "points": 25
+   "gp": 22,
+   "goals": 6,
+   "assists": 5,
+   "points": 11
   },
   "portrait": "alex-newhook.png"
  },
@@ -94,20 +94,20 @@
    "teamName": "Nashville"
   },
   "sinceSeason": 2024,
-  "nhlGames": 369,
+  "nhlGames": 391,
   "capHit": 3750000,
   "contractEnd": 2026,
   "otherTeams": [
    "Predators"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 73,
-   "goals": 7,
-   "assists": 15,
-   "points": 22
+   "gp": 22,
+   "goals": 1,
+   "assists": 6,
+   "points": 7
   },
   "portrait": "alexandre-carrier.png"
  },
@@ -132,7 +132,7 @@
    "teamName": "Columbus"
   },
   "sinceSeason": 2025,
-  "nhlGames": 283,
+  "nhlGames": 305,
   "capHit": 2500000,
   "contractEnd": 2027,
   "otherTeams": [
@@ -140,13 +140,13 @@
    "Blues"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 43,
-   "goals": 8,
-   "assists": 12,
-   "points": 20
+   "gp": 22,
+   "goals": 2,
+   "assists": 3,
+   "points": 5
   },
   "portrait": "alexandre-texier.png"
  },
@@ -165,20 +165,58 @@
   "weightLb": 240,
   "draft": null,
   "sinceSeason": 2022,
-  "nhlGames": 230,
+  "nhlGames": 251,
   "capHit": 1500000,
   "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 65,
+   "gp": 21,
    "goals": 1,
    "assists": 3,
    "points": 4
   },
   "portrait": "arber-xhekaj.png"
+ },
+ {
+  "id": 8482132,
+  "name": "Brett Berard",
+  "aliases": [],
+  "number": 37,
+  "position": "LW",
+  "positionName": "Left wing",
+  "shoots": "L",
+  "country": "United States",
+  "birthplace": "Providence, RI, United States",
+  "birthDate": "2002-09-09",
+  "heightIn": 69,
+  "weightLb": 175,
+  "draft": {
+   "year": 2020,
+   "round": 5,
+   "overall": 134,
+   "team": "NYR",
+   "teamName": "NY Rangers"
+  },
+  "sinceSeason": 2026,
+  "nhlGames": 49,
+  "capHit": 850000,
+  "contractEnd": 2026,
+  "otherTeams": [
+   "Rangers"
+  ],
+  "lastSeason": {
+   "season": "2026-27",
+   "league": "NHL",
+   "team": "Montréal Canadiens",
+   "gp": 1,
+   "goals": 0,
+   "assists": 0,
+   "points": 0
+  },
+  "portrait": "brett-berard.png"
  },
  {
   "id": 8475184,
@@ -201,7 +239,7 @@
    "teamName": "NY Rangers"
   },
   "sinceSeason": 2026,
-  "nhlGames": 958,
+  "nhlGames": 977,
   "capHit": 2150000,
   "contractEnd": 2026,
   "otherTeams": [
@@ -209,13 +247,13 @@
    "Rangers"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
-   "team": "Anaheim Ducks",
-   "gp": 75,
-   "goals": 22,
-   "assists": 28,
-   "points": 50
+   "team": "Montréal Canadiens",
+   "gp": 19,
+   "goals": 3,
+   "assists": 6,
+   "points": 9
   },
   "portrait": "chris-kreider.png"
  },
@@ -240,18 +278,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2020,
-  "nhlGames": 368,
+  "nhlGames": 390,
   "capHit": 7850000,
   "contractEnd": 2030,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 81,
-   "goals": 51,
-   "assists": 37,
-   "points": 88
+   "gp": 22,
+   "goals": 12,
+   "assists": 7,
+   "points": 19
   },
   "portrait": "cole-caufield.png"
  },
@@ -276,18 +314,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2025,
-  "nhlGames": 2,
+  "nhlGames": 3,
   "capHit": 909167,
   "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 2,
+   "gp": 1,
    "goals": 0,
-   "assists": 1,
-   "points": 1
+   "assists": 0,
+   "points": 0
   },
   "portrait": "david-reinbacher.png"
  },
@@ -312,18 +350,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2025,
-  "nhlGames": 5,
+  "nhlGames": 14,
   "capHit": 941667,
   "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 5,
-   "goals": 0,
-   "assists": 1,
-   "points": 1
+   "gp": 9,
+   "goals": 1,
+   "assists": 2,
+   "points": 3
   },
   "portrait": "florian-xhekaj.png"
  },
@@ -348,18 +386,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2024,
-  "nhlGames": 84,
+  "nhlGames": 86,
   "capHit": 940833,
   "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 82,
-   "goals": 19,
-   "assists": 43,
-   "points": 62
+   "gp": 2,
+   "goals": 1,
+   "assists": 1,
+   "points": 2
   },
   "portrait": "ivan-demidov.png"
  },
@@ -384,18 +422,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2025,
-  "nhlGames": 17,
+  "nhlGames": 31,
   "capHit": 945833,
   "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 17,
-   "wins": 9,
-   "gaa": 2.433957,
-   "svPct": 0.908482
+   "gp": 14,
+   "wins": 10,
+   "gaa": 2.191372,
+   "svPct": 0.923457
   },
   "portrait": "jacob-fowler.png"
  },
@@ -420,18 +458,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2019,
-  "nhlGames": 418,
+  "nhlGames": 440,
   "capHit": 2850000,
   "contractEnd": 2028,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 68,
-   "goals": 12,
-   "assists": 12,
-   "points": 24
+   "gp": 22,
+   "goals": 4,
+   "assists": 5,
+   "points": 9
   },
   "portrait": "jake-evans.png"
  },
@@ -456,92 +494,20 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2024,
-  "nhlGames": 59,
+  "nhlGames": 67,
   "capHit": 965000,
   "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 43,
-   "wins": 29,
-   "gaa": 2.779556,
-   "svPct": 0.901432
+   "gp": 8,
+   "wins": 3,
+   "gaa": 3.932624,
+   "svPct": 0.851675
   },
   "portrait": "jakub-dobes.png"
- },
- {
-  "id": 8483728,
-  "name": "Jared Davidson",
-  "aliases": [],
-  "number": 49,
-  "position": "C",
-  "positionName": "Centre",
-  "shoots": "L",
-  "country": "Canada",
-  "birthplace": "Edmonton, AB, Canada",
-  "birthDate": "2002-07-07",
-  "heightIn": 71,
-  "weightLb": 183,
-  "draft": {
-   "year": 2022,
-   "round": 5,
-   "overall": 130,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2025,
-  "nhlGames": 10,
-  "capHit": 850000,
-  "contractEnd": 2026,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "NHL",
-   "team": "Montréal Canadiens",
-   "gp": 10,
-   "goals": 0,
-   "assists": 1,
-   "points": 1
-  },
-  "portrait": "jared-davidson.png"
- },
- {
-  "id": 8481593,
-  "name": "Jayden Struble",
-  "aliases": [],
-  "number": 47,
-  "position": "D",
-  "positionName": "Defence",
-  "shoots": "L",
-  "country": "United States",
-  "birthplace": "Cumberland, RI, United States",
-  "birthDate": "2001-09-08",
-  "heightIn": 72,
-  "weightLb": 207,
-  "draft": {
-   "year": 2019,
-   "round": 2,
-   "overall": 46,
-   "team": "MTL",
-   "teamName": "Montréal"
-  },
-  "sinceSeason": 2023,
-  "nhlGames": 171,
-  "capHit": 1412500,
-  "contractEnd": 2028,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "NHL",
-   "team": "Montréal Canadiens",
-   "gp": 59,
-   "goals": 2,
-   "assists": 10,
-   "points": 12
-  },
-  "portrait": "jayden-struble.png"
  },
  {
   "id": 8476981,
@@ -564,20 +530,20 @@
    "teamName": "Columbus"
   },
   "sinceSeason": 2020,
-  "nhlGames": 688,
+  "nhlGames": 707,
   "capHit": 5500000,
   "contractEnd": 2026,
   "otherTeams": [
    "Blue Jackets"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 72,
-   "goals": 14,
-   "assists": 9,
-   "points": 23
+   "gp": 19,
+   "goals": 8,
+   "assists": 4,
+   "points": 12
   },
   "portrait": "josh-anderson.png"
  },
@@ -602,18 +568,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2022,
-  "nhlGames": 282,
+  "nhlGames": 304,
   "capHit": 7600000,
   "contractEnd": 2032,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 82,
-   "goals": 30,
-   "assists": 43,
-   "points": 73
+   "gp": 22,
+   "goals": 2,
+   "assists": 12,
+   "points": 14
   },
   "portrait": "juraj-slafkovsky.png"
  },
@@ -638,18 +604,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2022,
-  "nhlGames": 208,
+  "nhlGames": 226,
   "capHit": 5550000,
   "contractEnd": 2030,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 39,
+   "gp": 18,
    "goals": 2,
-   "assists": 9,
-   "points": 11
+   "assists": 4,
+   "points": 6
   },
   "portrait": "kaiden-guhle.png"
  },
@@ -674,20 +640,20 @@
    "teamName": "Chicago"
   },
   "sinceSeason": 2022,
-  "nhlGames": 306,
+  "nhlGames": 326,
   "capHit": 3600000,
   "contractEnd": 2026,
   "otherTeams": [
    "Blackhawks"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 37,
-   "goals": 8,
-   "assists": 7,
-   "points": 15
+   "gp": 20,
+   "goals": 2,
+   "assists": 5,
+   "points": 7
   },
   "portrait": "kirby-dach.png"
  },
@@ -712,50 +678,20 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2023,
-  "nhlGames": 166,
+  "nhlGames": 188,
   "capHit": 8850000,
   "contractEnd": 2033,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 82,
-   "goals": 12,
-   "assists": 66,
-   "points": 78
+   "gp": 22,
+   "goals": 3,
+   "assists": 19,
+   "points": 22
   },
   "portrait": "lane-hutson.png"
- },
- {
-  "id": 8483549,
-  "name": "Lucas Condotta",
-  "aliases": [],
-  "number": 82,
-  "position": "LW",
-  "positionName": "Left wing",
-  "shoots": "L",
-  "country": "Canada",
-  "birthplace": "Georgetown, ON, Canada",
-  "birthDate": "1997-11-06",
-  "heightIn": 73,
-  "weightLb": 218,
-  "draft": null,
-  "sinceSeason": 2022,
-  "nhlGames": 11,
-  "capHit": 850000,
-  "contractEnd": 2026,
-  "otherTeams": [],
-  "lastSeason": {
-   "season": "2025-26",
-   "league": "AHL",
-   "team": "Laval Rocket",
-   "gp": 70,
-   "goals": 8,
-   "assists": 10,
-   "points": 18
-  },
-  "portrait": "lucas-condotta.png"
  },
  {
   "id": 8476875,
@@ -778,7 +714,7 @@
    "teamName": "Florida"
   },
   "sinceSeason": 2022,
-  "nhlGames": 705,
+  "nhlGames": 714,
   "capHit": 6000000,
   "contractEnd": 2030,
   "otherTeams": [
@@ -786,13 +722,13 @@
    "Penguins"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 78,
-   "goals": 7,
-   "assists": 30,
-   "points": 37
+   "gp": 9,
+   "goals": 1,
+   "assists": 4,
+   "points": 5
   },
   "portrait": "mike-matheson.png"
  },
@@ -817,18 +753,18 @@
    "teamName": "Vegas"
   },
   "sinceSeason": 2019,
-  "nhlGames": 537,
+  "nhlGames": 553,
   "capHit": 7875000,
   "contractEnd": 2029,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 82,
-   "goals": 29,
-   "assists": 72,
-   "points": 101
+   "gp": 16,
+   "goals": 9,
+   "assists": 9,
+   "points": 18
   },
   "portrait": "nick-suzuki.png"
  },
@@ -853,20 +789,20 @@
    "teamName": "NY Islanders"
   },
   "sinceSeason": 2025,
-  "nhlGames": 468,
+  "nhlGames": 490,
   "capHit": 9500000,
   "contractEnd": 2032,
   "otherTeams": [
    "Islanders"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 80,
-   "goals": 12,
-   "assists": 35,
-   "points": 47
+   "gp": 22,
+   "goals": 0,
+   "assists": 9,
+   "points": 9
   },
   "portrait": "noah-dobson.png"
  },
@@ -891,18 +827,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2024,
-  "nhlGames": 100,
+  "nhlGames": 115,
   "capHit": 941667,
   "contractEnd": 2027,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 82,
-   "goals": 22,
-   "assists": 15,
-   "points": 37
+   "gp": 15,
+   "goals": 1,
+   "assists": 2,
+   "points": 3
   },
   "portrait": "oliver-kapanen.png"
  },
@@ -927,18 +863,18 @@
    "teamName": "Montréal"
   },
   "sinceSeason": 2022,
-  "nhlGames": 28,
+  "nhlGames": 36,
   "capHit": 853333,
   "contractEnd": 2026,
   "otherTeams": [],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 15,
+   "gp": 8,
    "goals": 1,
-   "assists": 0,
-   "points": 1
+   "assists": 2,
+   "points": 3
   },
   "portrait": "owen-beck.png"
  },
@@ -963,7 +899,7 @@
    "teamName": "Chicago"
   },
   "sinceSeason": 2015,
-  "nhlGames": 786,
+  "nhlGames": 808,
   "capHit": 5500000,
   "contractEnd": 2026,
   "otherTeams": [
@@ -971,13 +907,13 @@
    "Kings"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 45,
-   "goals": 6,
-   "assists": 6,
-   "points": 12
+   "gp": 22,
+   "goals": 3,
+   "assists": 5,
+   "points": 8
   },
   "portrait": "phillip-danault.png"
  },
@@ -1040,20 +976,20 @@
    "teamName": "St. Louis"
   },
   "sinceSeason": 2025,
-  "nhlGames": 175,
+  "nhlGames": 197,
   "capHit": 4200000,
   "contractEnd": 2029,
   "otherTeams": [
    "Blues"
   ],
   "lastSeason": {
-   "season": "2025-26",
+   "season": "2026-27",
    "league": "NHL",
    "team": "Montréal Canadiens",
-   "gp": 78,
-   "goals": 12,
-   "assists": 18,
-   "points": 30
+   "gp": 22,
+   "goals": 6,
+   "assists": 3,
+   "points": 9
   },
   "portrait": "zachary-bolduc.png"
  }

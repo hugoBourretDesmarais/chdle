@@ -166,8 +166,8 @@ function restoreDaily() {
     const char = byName.value.get(name)
     if (char) daily.guesses.unshift({ char, cells: compareGuess(char, daily.answer), animate: false })
   }
-  daily.won = s.won
-  daily.triesAtWin = s.guesses.length
+  daily.won = daily.guesses.some(g => g.char.name === daily.answer.name)
+  daily.triesAtWin = daily.won ? daily.guesses.length : 0
 }
 
 function persistDaily() {
@@ -343,7 +343,7 @@ const base = import.meta.env.BASE_URL
         <section class="panel intro">
           <h2>2026-27 ROSTER</h2>
           <p class="gallery-hint">
-            {{ scope ? `The ${pool.length} ${scopeName.toLowerCase()}` : `All ${players.length} players at Canadiens camp for 2026-27` }}.
+            {{ scope ? `The ${pool.length} ${scopeName.toLowerCase()}` : `All ${players.length} players on the current Canadiens roster` }}.
             Search by name, position, country, number or draft — then tap a card for the full details.
           </p>
         </section>

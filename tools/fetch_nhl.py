@@ -6,6 +6,7 @@ birthplace and season-by-season history. Raw responses are cached under
 tools/cache so a rerun after a hand edit doesn't hit the API again; delete the
 cache to pick up roster moves. Headshots land in public/portraits.
 """
+import argparse
 import json
 import re
 import time
@@ -44,10 +45,12 @@ TEAM_NAMES = {
 }
 
 
+REFRESH = False
+
 def get(url, cache_name, binary=False):
     CACHE.mkdir(exist_ok=True)
     f = CACHE / cache_name
-    if not f.exists():
+    if not f.exists() or (REFRESH and not binary):
         for attempt in range(4):
             try:
                 req = urllib.request.Request(url, headers=UA)
@@ -108,7 +111,7 @@ def nationalities(ids):
 
 
 def main():
-    roster = get(f"https://api-web.nhle.com/v1/roster/{TEAM}/{SEASON}", f"roster-{SEASON}.json")
+    roster = get(f"https://api-web.nhle.com/v1/roster/{TEAM}/current", "roster-current.json")
     PORTRAITS.mkdir(parents=True, exist_ok=True)
     nat = nationalities([p["id"] for g in ("forwards", "defensemen", "goalies") for p in roster[g]])
     players = []
@@ -139,11 +142,8 @@ def main():
             dd = landing.get("draftDetails")
             pos = p["positionCode"]
             cap_hit, contract_end = SALARIES.get(name, (None, None))
-            # Only NHL contracts on file make the cut; camp invitees and AHL
-            # deals now get sweater numbers in the feed too.
             if name not in SALARIES:
-                print(f"skipping {name}: no NHL contract on file")
-                continue
+                raise ValueError(f"Add verified contract data for current roster player {name}")
             players.append({
                 "id": pid,
                 "name": name,
@@ -180,4 +180,7 @@ def main():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--refresh", action="store_true")
+    REFRESH = parser.parse_args().refresh
     main()

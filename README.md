@@ -66,25 +66,22 @@ under `chdle:anki` and `chdle:anki:logos`; older day-based decks migrate at five
 ### Roster scope
 
 ⚙️ Settings lets you play with **NHL veterans only** — players with at least one NHL game — instead
-of the full training-camp roster with its prospects. Players on the same scope share the same daily
+of the current Canadiens roster. Players on the same scope share the same daily
 player. Over the wire the scope travels under the original `arcLimit`/`arc_limit` names and holds
 `nhl` or the empty string.
 
 ## Data
 
-The Canadiens' 2026-27 roster as the NHL API lists it at training camp, minus camp invitees without a
-sweater number and a short `EXCLUDE` list in `tools/fetch_nhl.py` (29 players at the time of
-writing). Roster moves are picked up by rerunning the fetch:
+Current NHL roster, including injured players still with Montréal. Refreshed November 19, 2026: 27 players. Membership comes from the current-roster endpoint; contract data no longer determines who belongs.
 
 ```bash
-rm -rf tools/cache                   # forget the cached API responses
-python3 tools/fetch_nhl.py           # roster + player pages -> src/data/players.json, public/portraits/
+python3 tools/fetch_nhl.py --refresh           # roster + player pages -> src/data/players.json, public/portraits/
 python3 tools/download_backgrounds.py  # Bell Centre photos -> public/backgrounds/, src/data/backgrounds.json
 python3 tools/make_textures.py       # wear map for the logo -> public/textures/
 node api/tools/gen_data.mjs          # regenerate the worker's copy of the roster
 ```
 
-`fetch_nhl.py` reads `/v1/roster/MTL/20262027` and each player's `/v1/player/{id}/landing` for the
+`fetch_nhl.py` reads `/v1/roster/MTL/current` and each player's `/v1/player/{id}/landing` for the
 draft record, birthplace, NHL games played,
 cap hit (hand-kept in `tools/salaries.json` from CapWages and HighDanger, since the NHL API has no contracts), the first regular season with the club and the last
 season's stat line. Headshots are the NHL's official mugs. Age is computed in the browser from the

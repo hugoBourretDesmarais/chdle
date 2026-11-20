@@ -21,7 +21,7 @@ const emit = defineEmits(['close'])
           <tr><td>Position</td><td>C, LW, RW, D or G. Yellow when both are forwards but not the same one</td></tr>
           <tr><td>Shoots</td><td>L or R — the catching hand for a goalie</td></tr>
           <tr><td>Country</td><td>Nationality, as listed on NHL.com</td></tr>
-          <tr><td>Number</td><td>Sweater number at camp. Prospects without one show —</td></tr>
+          <tr><td>Number</td><td>Current sweater number</td></tr>
           <tr><td>Age</td><td>Age today</td></tr>
           <tr><td>Height</td><td>In feet and inches; the arrow points to taller or shorter</td></tr>
           <tr><td>Draft</td><td>Round and the club that picked the player. Yellow when only the round or only the club matches; the arrow follows the round. Undrafted players only match each other</td></tr>
@@ -41,7 +41,7 @@ const emit = defineEmits(['close'])
           <tr><td>🎲 Practice</td><td>Unlimited random players — hit <b>New player</b> any time to reroll.</td></tr>
           <tr><td>🛡️ Logo quiz</td><td>Name the NHL team from its logo, all 32 clubs. Every miss unlocks a hint (conference, division, founding year, first letter). Solving keeps your streak going; showing the answer ends it.</td></tr>
           <tr><td>🃏 Flashcards</td><td>Spaced repetition, Anki-style, with two decks: <b>Numbers</b> (type a Canadien's sweater number; toggle <b>Number</b>, <b>Position</b>, <b>Shoots</b> and <b>Country</b> to pick what you're quizzed on, and the card only counts as right when every answer is) and <b>Logos</b> (name the team). Rate each card Again, Hard, Good or Easy: a miss comes back within a couple of cards, and every Good pushes it further down the pile, so you can keep going as long as you like. New cards join once nothing is waiting, the most experienced players and the Atlantic Division first; progress is saved on this device.</td></tr>
-          <tr><td>📋 Roster</td><td>Browse the whole 2026-27 camp roster and search by name, position, country or draft. Tap a card for full details, or untick it to keep it out of practice mode.</td></tr>
+          <tr><td>📋 Roster</td><td>Browse the current Canadiens roster and search by name, position, country or draft. Tap a card for full details, or untick it to keep it out of practice mode.</td></tr>
         </tbody>
       </table>
 
@@ -60,10 +60,10 @@ const emit = defineEmits(['close'])
       <h3>Roster</h3>
       <p>
         Open <b>Settings</b> to play with NHL veterans only — players with at least one NHL game —
-        instead of the full camp roster with its prospects.
+        instead of the current Canadiens roster.
       </p>
 
-      <p class="note">Roster, bios, headshots and team logos come from NHL.com and reflect the 2026-27 training camp roster. Fan project.</p>
+      <p class="note">Roster, bios, headshots and team logos come from NHL.com and reflect the current Canadiens roster. Fan project.</p>
     </div>
   </div>
 </template>

@@ -27,14 +27,14 @@ function apply() {
 
       <h3>Roster</h3>
       <p>
-        The full camp roster includes prospects who have yet to play an NHL game. Narrow it if you
+        The current roster includes recalled players. Narrow it if you
         only follow the big club — as the answer, in the guess suggestions and in the roster view.
       </p>
 
       <label class="arc-field">
         Play with
         <select v-model="pending">
-          <option value="">Full 2026-27 camp roster</option>
+          <option value="">Current Canadiens roster</option>
           <option v-for="s in SCOPES" :key="s.key" :value="s.key">{{ s.label }} ({{ s.hint }})</option>
         </select>
       </label>

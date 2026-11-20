@@ -89,7 +89,7 @@ function signOut() {
           <tr v-for="e in entries" :key="e.name" :class="{ mine: account && e.name === account.name }">
             <td>{{ e.rank }}</td>
             <td class="p-name">{{ e.name }}</td>
-            <td class="p-arc" :title="e.arcLimit ? `Roster: ${e.arcLimit === 'nhl' ? 'NHL veterans only' : e.arcLimit}` : 'Full camp roster'">
+            <td class="p-arc" :title="e.arcLimit ? `Roster: ${e.arcLimit === 'nhl' ? 'NHL veterans only' : e.arcLimit}` : 'Current Canadiens roster'">
               <span>{{ e.arcLimit === 'nhl' ? 'NHL' : (e.arcLimit || 'All') }}</span>
             </td>
             <td>{{ e.streak }}<span class="best"> / {{ e.maxStreak }}</span></td>
