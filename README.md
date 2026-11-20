@@ -38,7 +38,7 @@ Type a player name and submit. Each guess reveals a row of tiles:
 | With CH since | first regular season with the Canadiens; newcomers and prospects count as 2026-27 |
 
 Clues unlock as you guess: **Birthplace** after 5 tries, **Last Season** (most recent stat line)
-after 8, **Draft** (year, round, overall pick and club) after 10. The daily player resets at local
+after 8, **Draft** (year, round, overall pick and club) after 10. The daily player resets at Montréal
 midnight; stats live in `localStorage`.
 
 Modes: 🏒 **Classic** (one shared daily player), 🎲 **Practice** (unlimited, honours the roster's
@@ -66,8 +66,7 @@ under `chdle:anki` and `chdle:anki:logos`; older day-based decks migrate at five
 ### Roster scope
 
 ⚙️ Settings lets you play with **NHL veterans only** — players with at least one NHL game — instead
-of the current Canadiens roster. Players on the same scope share the same daily
-player. Over the wire the scope travels under the original `arcLimit`/`arc_limit` names and holds
+of the current Canadiens roster. Classic ignores scope and uses one server-stored puzzle for every player. Over the wire the scope travels under the original `arcLimit`/`arc_limit` names and holds
 `nhl` or the empty string.
 
 ## Data
@@ -120,3 +119,5 @@ Enable it once under **Settings → Pages → Source: GitHub Actions**.
 
 Roster data and headshots from [NHL.com](https://www.nhl.com/canadiens/). Backdrops from Wikimedia
 Commons photographers (CC BY-SA). Not affiliated with the Montréal Canadiens or the NHL. Fan project.
+
+Classic fetches `/daily`, with a roster snapshot and answer saved once per Montréal date in `ch_daily`. Roster updates cannot change an initialized puzzle. Open tabs reload the daily at midnight; a failed request offers Retry instead of a locally generated answer. Check with `node tests/daily.mjs`.

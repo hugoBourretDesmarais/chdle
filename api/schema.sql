@@ -78,3 +78,5 @@ CREATE TABLE IF NOT EXISTS ch_standings (
 CREATE INDEX IF NOT EXISTS idx_ch_standings_wins ON ch_standings(wins DESC);
 CREATE INDEX IF NOT EXISTS idx_ch_standings_streak ON ch_standings(max_streak DESC);
 CREATE INDEX IF NOT EXISTS idx_ch_results_day ON ch_results(day, guesses);
+
+CREATE TABLE IF NOT EXISTS ch_daily (day TEXT PRIMARY KEY, payload TEXT NOT NULL);

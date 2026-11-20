@@ -106,3 +106,7 @@ export function fetchMe(account) {
   if (!account?.token) return Promise.resolve(null)
   return call(`/me?${new URLSearchParams({ token: account.token })}`, { method: 'GET' })
 }
+
+export function fetchDaily() {
+  return call('/daily', { method: 'GET', cache: 'no-store' })
+}

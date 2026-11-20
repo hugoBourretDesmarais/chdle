@@ -1,3 +1,4 @@
+import { montrealDay, nextReset } from './day.js'
 // Daily selection, persistence, stats.
 const EPOCH = '2026-09-11' // daily #1
 
@@ -11,12 +12,7 @@ function hashString(s) {
 }
 
 export function localDateString(offsetDays = 0) {
-  const d = new Date()
-  d.setDate(d.getDate() + offsetDays)
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
+  return montrealDay(new Date(), offsetDays)
 }
 
 export function dailyNumber(dateStr = localDateString()) {
@@ -35,10 +31,7 @@ export function randomIndex(count, avoid = -1) {
 }
 
 export function msUntilMidnight() {
-  const now = new Date()
-  const next = new Date(now)
-  next.setHours(24, 0, 0, 0)
-  return next - now
+  return nextReset() - Date.now()
 }
 
 const KEY = 'chdle'

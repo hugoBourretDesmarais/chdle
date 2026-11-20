@@ -37,7 +37,7 @@ const emit = defineEmits(['close'])
       <h3>Modes</h3>
       <table class="props">
         <tbody>
-          <tr><td>🏒 Classic</td><td>One player per day, shared by everyone. Resets at your local midnight.</td></tr>
+          <tr><td>🏒 Classic</td><td>One player per day, shared by everyone. Resets at midnight in Montréal, for everyone.</td></tr>
           <tr><td>🎲 Practice</td><td>Unlimited random players — hit <b>New player</b> any time to reroll.</td></tr>
           <tr><td>🛡️ Logo quiz</td><td>Name the NHL team from its logo, all 32 clubs. Every miss unlocks a hint (conference, division, founding year, first letter). Solving keeps your streak going; showing the answer ends it.</td></tr>
           <tr><td>🃏 Flashcards</td><td>Spaced repetition, Anki-style, with two decks: <b>Numbers</b> (type a Canadien's sweater number; toggle <b>Number</b>, <b>Position</b>, <b>Shoots</b> and <b>Country</b> to pick what you're quizzed on, and the card only counts as right when every answer is) and <b>Logos</b> (name the team). Rate each card Again, Hard, Good or Easy: a miss comes back within a couple of cards, and every Good pushes it further down the pile, so you can keep going as long as you like. New cards join once nothing is waiting, the most experienced players and the Atlantic Division first; progress is saved on this device.</td></tr>

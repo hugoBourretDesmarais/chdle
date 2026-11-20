@@ -14,7 +14,7 @@ import WinPanel from './components/WinPanel.vue'
 import HelpModal from './components/HelpModal.vue'
 import StatsModal from './components/StatsModal.vue'
 import CluesPanel from './components/CluesPanel.vue'
-import { apiEnabled, fetchCount, reportSolve, submitResult } from './game/api.js'
+import { apiEnabled, fetchDaily, fetchCount, reportSolve, submitResult } from './game/api.js'
 import GalleryPanel from './components/GalleryPanel.vue'
 import LeaderboardModal from './components/LeaderboardModal.vue'
 import WinPrompt from './components/WinPrompt.vue'
@@ -83,14 +83,23 @@ function startCelebration() {
 
 async function refreshCount() {
   if (!apiEnabled) return
-  const r = await fetchCount(localDateString(), scope.value)
+  const r = await fetchCount(dailyDay.value || localDateString(), null)
   if (r) solveCount.value = r.count
 }
+
+const dailyRoster = ref(players)
+const dailyDay = ref('')
+const resetsAt = ref(0)
+const dailyReady = ref(false)
+const dailyError = ref(false)
+const yesterdayAnswer = ref(null)
+let loadingDaily = false
+let retryAt = 0
 
 const scopeName = computed(() => scopeLabel(scope.value))
 
 // Everything the player can meet — answers, suggestions, roster — comes from here.
-const pool = computed(() => players.filter(p => inScope(p, scope.value)))
+const pool = computed(() => mode.value === 'daily' ? dailyRoster.value : players.filter(p => inScope(p, scope.value)))
 
 const byName = computed(() => new Map(pool.value.map(p => [p.name, p])))
 
@@ -124,8 +133,7 @@ const daily = reactive({
 })
 const practice = reactive({ answer: null, guesses: [], won: false, counted: false })
 
-const yesterdayAnswer = computed(
-  () => pool.value[dailyIndex(pool.value.length, localDateString(-1))])
+
 
 const game = computed(() => (mode.value === 'practice' ? practice : daily))
 const guessedNames = computed(() => new Set(game.value.guesses.map(g => g.char.name)))
@@ -134,8 +142,8 @@ const guessedNames = computed(() => new Set(game.value.guesses.map(g => g.char.n
 // signing in afterwards would otherwise leave that day unranked forever.
 const pendingWin = computed(() => (daily.won && daily.answer
   ? {
-    day: localDateString(),
-    arcLimit: scope.value,
+    day: dailyDay.value,
+    arcLimit: null,
     guesses: daily.triesAtWin || daily.guesses.length,
     name: daily.answer.name,
   }
@@ -158,12 +166,12 @@ function maybePromptSignIn() {
 function restoreDaily() {
   revealing.value = false
   celebrating.value = false
-  daily.answer = pool.value[dailyIndex(pool.value.length)]
+  if (!daily.answer) return
   daily.guesses = []
   daily.won = false
-  const s = loadDailyState(scope.value)
+  const s = loadDailyState(null)
   for (const name of s.guesses) {
-    const char = byName.value.get(name)
+    const char = dailyRoster.value.find(p => p.name === name)
     if (char) daily.guesses.unshift({ char, cells: compareGuess(char, daily.answer), animate: false })
   }
   daily.won = daily.guesses.some(g => g.char.name === daily.answer.name)
@@ -172,8 +180,8 @@ function restoreDaily() {
 
 function persistDaily() {
   saveDailyState({
-    date: localDateString(),
-    scope: scope.value,
+    date: dailyDay.value,
+    scope: null,
     guesses: [...daily.guesses].reverse().map(g => g.char.name),
     won: daily.won,
   })
@@ -192,7 +200,6 @@ function onPromptAccount(next) {
 function applyScope(next) {
   scope.value = next
   saveScope(next)
-  restoreDaily()
   newPractice()
   galleryPick.value = null
   solveCount.value = null
@@ -201,6 +208,7 @@ function applyScope(next) {
 
 function submitGuess(char) {
   const g = game.value
+  if (mode.value === 'daily' && (!dailyReady.value || Date.now() >= resetsAt.value)) { syncDaily(); return }
   if (g.won || guessedNames.value.has(char.name)) return
   const isDaily = mode.value === 'daily'
   const statMode = isDaily ? 'classic' : 'practice'
@@ -220,7 +228,7 @@ function submitGuess(char) {
     recordWin(statMode, g.guesses.length)
     if (isDaily) {
       streak.value = currentStreak()
-      reportSolve(localDateString(), scope.value, char.name).then(r => {
+      reportSolve(dailyDay.value, null, char.name).then(r => {
         if (r) solveCount.value = r.count
       })
       recordDailyWin(account.value)
@@ -249,10 +257,40 @@ function newPractice() {
   practice.counted = false
 }
 
+async function syncDaily() {
+  if (loadingDaily) return
+  loadingDaily = true
+  dailyReady.value = false
+  dailyError.value = false
+  clearTimeout(revealTimer)
+  showWinPrompt.value = false
+  const data = await fetchDaily()
+  if (data?.players?.some(p => p.name === data.answer) && data.resetsAt > Date.now()) {
+    dailyRoster.value = data.players.map(decorate)
+    dailyDay.value = data.day
+    resetsAt.value = data.resetsAt
+    daily.number = dailyNumber(data.day)
+    daily.answer = dailyRoster.value.find(p => p.name === data.answer)
+    yesterdayAnswer.value = data.yesterday ? { name: data.yesterday } : null
+    restoreDaily()
+    dailyReady.value = true
+    refreshCount()
+    recordDailyWin(account.value)
+  } else {
+    dailyError.value = true
+    daily.answer = null
+    daily.guesses = []
+    daily.won = false
+    retryAt = Date.now() + 15000
+  }
+  loadingDaily = false
+}
+
 const countdown = ref('')
 let timer = null
 function tick() {
-  const ms = msUntilMidnight()
+  if ((!dailyReady.value && Date.now() >= retryAt) || (dailyReady.value && Date.now() >= resetsAt.value)) syncDaily()
+  const ms = Math.max(0, resetsAt.value - Date.now())
   const h = String(Math.floor(ms / 3600000)).padStart(2, '0')
   const m = String(Math.floor((ms % 3600000) / 60000)).padStart(2, '0')
   const s = String(Math.floor((ms % 60000) / 1000)).padStart(2, '0')
@@ -260,9 +298,8 @@ function tick() {
 }
 
 onMounted(() => {
-  restoreDaily()
+  syncDaily()
   newPractice()
-  refreshCount()
   // Retries a win the server never got; /result ignores a day it already has.
   recordDailyWin(account.value)
   tick()
@@ -332,7 +369,7 @@ const base = import.meta.env.BASE_URL
         <button class="tool" title="How to play" @click="showHelp = true"><Icon name="help" :size="23" /></button>
       </div>
 
-      <p v-if="scope" class="arc-banner">
+      <p v-if="scope && mode !== 'daily'" class="arc-banner">
         <Icon name="whistle" :size="15" /> <b>{{ scopeName }}</b> — {{ pool.length }} of {{ players.length }} players
         <button class="arc-clear" @click="applyScope(null)">clear</button>
       </p>
@@ -380,6 +417,12 @@ const base = import.meta.env.BASE_URL
         <LogoCardsPanel v-else :teams="TEAMS" />
       </template>
 
+      <template v-else-if="mode === 'daily' && !dailyReady">
+        <section class="panel intro">
+          <p>{{ dailyError ? 'Could not load today’s shared puzzle. Please retry.' : 'Loading today’s shared puzzle…' }}</p>
+          <button v-if="dailyError" class="reset-btn" @click="syncDaily">Retry</button>
+        </section>
+      </template>
       <template v-else>
         <section class="panel intro">
           <h2 v-if="mode === 'daily'">GUESS TODAY'S CANADIEN!</h2>
@@ -427,7 +470,7 @@ const base = import.meta.env.BASE_URL
           </div>
         </section>
 
-        <p class="yesterday" v-if="mode === 'daily' && daily.number > 1">
+        <p class="yesterday" v-if="mode === 'daily' && yesterdayAnswer && daily.number > 1">
           Yesterday's player #{{ daily.number - 1 }} was <b>{{ yesterdayAnswer.name }}</b>
         </p>
       </template>

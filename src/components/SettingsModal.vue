@@ -28,7 +28,7 @@ function apply() {
       <h3>Roster</h3>
       <p>
         The current roster includes recalled players. Narrow it if you
-        only follow the big club — as the answer, in the guess suggestions and in the roster view.
+        only follow the big club — for practice, flashcards and browsing.
       </p>
 
       <label class="arc-field">
@@ -44,8 +44,7 @@ function apply() {
       </p>
 
       <p class="note">
-        Players using the same roster share the same daily player. Changing this starts today's
-        player over.
+        Classic always uses the same shared daily player for everyone. This setting does not change it.
       </p>
 
       <button class="apply" :disabled="!changed" @click="apply">

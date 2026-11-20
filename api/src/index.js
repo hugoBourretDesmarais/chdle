@@ -1,7 +1,6 @@
-import { NAMES, NHL_GAMES, SCOPES } from './data.js'
+import { montrealDay, nextReset } from '../../src/game/day.js'
+import { NAMES, SCOPES, PLAYERS } from './data.js'
 
-// Must stay byte-identical to the client's hash in src/game/state.js —
-// the worker recomputes the day's answer to verify a claimed solve.
 function hashString(s) {
   let h = 2166136261
   for (let i = 0; i < s.length; i++) {
@@ -11,16 +10,19 @@ function hashString(s) {
   return h >>> 0
 }
 
-// "arc" throughout is the roster scope: '' for the full camp roster, 'nhl'
-// for players with at least one NHL game.
-function poolFor(arcLimit) {
-  if (arcLimit === 'nhl') return NAMES.filter((_, i) => NHL_GAMES[i] > 0)
-  return NAMES
+async function dailyPuzzle(env, day) {
+  let row = await env.DB.prepare('SELECT payload FROM ch_daily WHERE day = ?').bind(day).first()
+  if (!row) {
+    const payload = { day, answer: NAMES[hashString('chdle:' + day) % NAMES.length], players: PLAYERS }
+    await env.DB.prepare('INSERT OR IGNORE INTO ch_daily (day, payload) VALUES (?, ?)')
+      .bind(day, JSON.stringify(payload)).run()
+    row = await env.DB.prepare('SELECT payload FROM ch_daily WHERE day = ?').bind(day).first()
+  }
+  return JSON.parse(row.payload)
 }
 
-function answerFor(day, arcLimit) {
-  const pool = poolFor(arcLimit)
-  return pool[hashString('chdle:' + day) % pool.length]
+async function answerFor(env, day) {
+  return (await dailyPuzzle(env, day)).answer
 }
 
 const DAY_RE = /^\d{4}-\d{2}-\d{2}$/
@@ -115,6 +117,14 @@ export default {
 
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers })
 
+    if (request.method === 'GET' && url.pathname === '/daily') {
+      const now = new Date()
+      const puzzle = await dailyPuzzle(env, montrealDay(now))
+      const previous = await env.DB.prepare('SELECT payload FROM ch_daily WHERE day = ?')
+        .bind(previousDay(puzzle.day)).first()
+      return json({ ...puzzle, resetsAt: nextReset(now), yesterday: previous ? JSON.parse(previous.payload).answer : null }, 200, headers)
+    }
+
     // GET /count?day=YYYY-MM-DD&arc=<arc name> -> how many solved that day
     if (request.method === 'GET' && url.pathname === '/count') {
       const day = url.searchParams.get('day') || ''
@@ -141,7 +151,7 @@ export default {
       if (!isKnownArc(arcLimit)) return json({ error: 'bad arc' }, 400, headers)
       // Only a correct answer counts, so the tally can't be inflated by
       // anyone who hasn't actually solved it.
-      if (name !== answerFor(day, arcLimit)) {
+      if (name !== await answerFor(env, day)) {
         return json({ error: 'wrong answer', counted: false }, 403, headers)
       }
       const hash = await ipHash(request, env)
@@ -261,7 +271,7 @@ export default {
         return json({ error: 'bad guesses' }, 400, headers)
       }
       if (!isKnownArc(arcLimit)) return json({ error: 'bad arc' }, 400, headers)
-      if (name !== answerFor(day, arcLimit)) return json({ error: 'wrong answer' }, 403, headers)
+      if (name !== await answerFor(env, day)) return json({ error: 'wrong answer' }, 403, headers)
 
       const existing = await env.DB.prepare(
         'SELECT day FROM ch_results WHERE player_id = ? AND day = ?'
